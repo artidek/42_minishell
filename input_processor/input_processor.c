@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/13 19:49:59 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:46:24 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	run_input_processor(void)
 			free(input);
 			return (0);
 		}
+		run_command_processor(input);
 		if (input)
 			free(input);
 		if (prompt)
