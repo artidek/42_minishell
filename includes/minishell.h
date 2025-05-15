@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/15 10:53:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:16:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		create_pipe(int *pipefd);
 int		read_pipe(int read_end, char **input);
 int		alloc_str(char **str, int size);
 int		isalldigit(char *str);
+int absl(int num);
 char	*init_prompt(void);
 int		run_input_processor(void);
 void	free_arr(char **arr);

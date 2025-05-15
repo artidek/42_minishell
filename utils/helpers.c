@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:30:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/13 18:42:09 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 15:16:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	seg_init(int signal, void(sig_handler)(int))
 	sa.sa_handler = sig_handler;
 	sa.sa_flags = 0;
 	sigaction(signal, &sa, NULL);
+}
+
+int absl(int num)
+{
+	if (num < 0)
+		return (-num);
+	else
+		return (num);
 }
