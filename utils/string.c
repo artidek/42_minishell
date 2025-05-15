@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 16:39:37 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/14 18:51:25 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:16:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_special(char *c, t_charset **set)
 	{
 		if (ascii_set[i] == *c)
 		{
-			add_charset(&set, new_charset((i + 8) - 1));
+			add_charset(set, new_charset((i + 8) - 1));
 			return (1);
 		}
 	}
@@ -44,25 +44,20 @@ static int	check_delim(char ch, char *delim_set)
 t_charset	*extract_string(char *str, char *delim_set)
 {
 	t_charset	*charset;
-	int	*count;
 
 	charset = NULL;
-	count = malloc(sizeof(int));
-	if (!count)
-		return (NULL);
 	while (*str)
 	{
 		if (check_delim(*str, delim_set))
 			break;
 		if (*str == '\\')
 		{
-			if(is_special((str + 1), &charset));
+			if(is_special((str + 1), &charset))
 				str++;
 		}
 		add_charset(&charset, new_charset(*str));
 		if (!charset)
-			return;
-		*count += 1;
+			return (NULL);
 		str++;
 	}
 	return (charset);

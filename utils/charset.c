@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   charset.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:22:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/14 18:30:21 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:15:37 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_charset	*new_charset(char c)
 		return (NULL);
 	new_set->chr = c;
 	new_set->next = NULL;
+	new_set->count = NULL;
+	return (new_set);
 }
 
 void	add_charset(t_charset **set, t_charset *new_set)
@@ -43,8 +45,6 @@ void	add_charset(t_charset **set, t_charset *new_set)
 	t_charset	*temp;
 
 	if (!(*set) && !new_set)
-		return;
-	if (!(*set)->count)
 		return;
 	if (!(*set))
 	{

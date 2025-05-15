@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/14 11:53:58 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 10:53:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ char	*init_prompt(void);
 int		run_input_processor(void);
 void	free_arr(char **arr);
 void	seg_init(int signal, void(sig_handler)(int));
+void	run_command_processor(char *input);
 
 #endif

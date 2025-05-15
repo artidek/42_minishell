@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/14 18:30:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:15:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ typedef struct s_seq
 }						t_seq;
 
 void					parse_input(char *input, t_seq **sequence);
-void					add_sequnce(t_seq **sequence);
+void					add_sequence(t_seq **sequence);
 void					clear_sequence(t_seq **sequence);
 void					clear_charset(t_charset **set);
 void					add_charset(t_charset **set, t_charset *new_set);
 void					clear_charset(t_charset **set);
+void	run_command_processor(char *input);
 t_charset				*extract_string(char *str, char *delim_set);
 t_charset				*new_charset(char c);
 

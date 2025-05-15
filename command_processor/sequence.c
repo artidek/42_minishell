@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:13:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/14 18:30:28 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/15 11:07:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cmd_proc.h"
 
-static void	init_redir(t_seq **sequence)
-{
-	(*sequence)->redir_paths.redir_in = NULL;
-	(*sequence)->redir_paths.redir_out = NULL;
-}
-
 static t_seq	*new_sequence(void)
 {
 	t_seq	*new_seq;
-	
+
 	new_seq = malloc(sizeof(t_seq));
 	if (!new_seq)
 		return (NULL);
@@ -31,6 +25,7 @@ static t_seq	*new_sequence(void)
 	new_seq->redir_paths.redir_in = NULL;
 	new_seq->redir_paths.redir_out = NULL;
 	new_seq->next = NULL;
+	return (new_seq);
 }
 
 void	clear_sequence(t_seq **sequence)
@@ -53,7 +48,7 @@ void	clear_sequence(t_seq **sequence)
 	}
 }
 
-void	add_sequnce(t_seq **sequence)
+void	add_sequence(t_seq **sequence)
 {
 	t_seq	*temp;
 

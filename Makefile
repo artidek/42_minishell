@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
+#    By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/05/14 11:46:21 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/05/15 10:59:40 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,14 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFTPATH = libft/ft_printf/
 
-IN_PROC = input_processor/input_processor.c input_processor/prompt.c 
-UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c
+CMD_PROC = command_processor/command_processor.c command_processor/commands.c command_processor/parse.c command_processor/sequence.c
+IN_PROC = input_processor/input_processor.c input_processor/prompt.c
+UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/charset.c utils/processes.c utils/string.c
 
 UTILOBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(UTILS)))
 IN_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(IN_PROC)))
-OBJS = $(IN_PROC_OBJS) $(UTILOBJS)
+CMD_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(CMD_PROC)))
+OBJS = $(IN_PROC_OBJS) $(UTILOBJS) $(CMD_PROC_OBJS)
 
 LIBFT = $(LIBFTPATH)/libftprintf.a
 LIBR = minishell.a
@@ -34,6 +36,10 @@ HOSTNM := @$(shell hostname)
 	@$(CC) $(CFLAGS) -DHSTNM=\"$(HOSTNM)\" -c $< -o $@
 
 ./objs/%.o: ./utils/%.c
+	@mkdir -p objs
+	@$(CC) $(CFLAGS) -DHSTNM=\"$(HOSTNM)\" -c $< -o $@
+
+./objs/%.o: ./command_processor/%.c
 	@mkdir -p objs
 	@$(CC) $(CFLAGS) -DHSTNM=\"$(HOSTNM)\" -c $< -o $@
 
@@ -51,11 +57,11 @@ $(LIBFT):
 
 clean:
 	@rm -f $(OBJS)
-	@make clean -s -C $(LIBFTPATH) 
+	@make clean -s -C $(LIBFTPATH)
 	@echo "Clean complete"
 
 fclean: clean
-	@make fclean -s -C $(LIBFTPATH) 
+	@make fclean -s -C $(LIBFTPATH)
 	@rm -f ./objs/$(LIBR)
 	@rm -f $(NAME)
 	@rm -d objs
