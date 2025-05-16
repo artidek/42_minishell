@@ -6,40 +6,49 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:32:29 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/15 16:17:18 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:31:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*get_wd(char **pwd, int arrlen)
+static char **get_pwd()
+{
+	char buf[1024];
+	char *cwd;
+	char **res;
+
+	cwd = getcwd(buf, 1024);
+	res = ft_split(cwd, '/');
+	return (res);
+}
+
+static char	*get_wd(char **pwd, int diff, int arrlen)
 {
 	char	*str1;
 	char	*str2;
 
 	str1 = NULL;
 	str2 = NULL;
-	printf ("arr_len %d\n", arrlen);
-	if (arrlen > 1)
+	if (diff > 1)
 	{
 		str1 = ft_strjoin("~", "/");
-		str2 = ft_strjoin(str1, pwd[arrlen - 2]);
+		str2 = ft_strjoin(str1, pwd[arrlen - diff]);
 		free(str1);
 		str1 = ft_strjoin(str2, "/");
 		free(str2);
-		str2 = ft_strjoin(str1, pwd[arrlen - 1]);
+		str2 = ft_strjoin(str1, pwd[arrlen - (diff - 1)]);
 		free(str1);
 		str1 = ft_strjoin(str2, "$ ");
 		free(str2);
 		return (str1);
 	}
-	if (arrlen == 1)
-	{
-		str1 = ft_strjoin("~", "/");
-		str2 = ft_strjoin(str1, pwd[arrlen - 1]);
-		free(str1);
-	}
-	return (str2);
+	str1 = ft_strjoin("~", "/");
+	str2 = ft_strjoin(str1, pwd[arrlen - diff]);
+	free(str1);
+	str1 = ft_strjoin(str2, "$ ");
+	free(str2);
+	return (str1);
 }
 
 static char	*get_name(char *logname, char *hostname)
@@ -65,13 +74,15 @@ static char	*build_prompt(char *logname, char *hostname, char **pwd, char **home
 	arrlen_pwd = arr_len(pwd);
 	arrlen_home = arr_len(home);
 	temp2 = NULL;
-	printf("arrlen pwd %d arrlen home %d", arrlen_pwd, arrlen_home);
 	if (arrlen_pwd - arrlen_home > 0 && arrlen_pwd > 0)
-		temp2 = get_wd(pwd, arrlen_pwd - arrlen_home);
+		temp2 = get_wd(pwd, arrlen_pwd - arrlen_home, arrlen_pwd);
 	else if (arrlen_pwd - arrlen_home < 0 && arrlen_pwd > 0)
-		temp2 = get_wd(home, arrlen_home);
-	else if (arrlen_pwd == 0 || arrlen_pwd - arrlen_home == 0)
-		temp2 = ft_strdup("$");
+		temp2 = get_wd(home, arrlen_pwd, arrlen_pwd);
+	else if (arrlen_pwd == 0)
+		temp2 = ft_strdup("/$");
+	else if (arrlen_pwd - arrlen_home == 0)
+		temp2 = ft_strdup("~$");
+	printf("arrlen_home %d\n", arrlen_home);
 	prompt = ft_strjoin(temp1, temp2);
 	free(temp1);
 	free(temp2);
@@ -88,11 +99,12 @@ char	*init_prompt(void)
 
 	prompt = NULL;
 	logname = getenv("LOGNAME");
-	pwd = ft_split(getenv("PWD"), '/');
+	pwd = get_pwd();
 	home = ft_split(getenv("HOME"), '/');
 	hostname = ft_split(HSTNM, '.');
 	prompt = build_prompt(logname, hostname[0], pwd, home);
 	free_arr(hostname);
 	free_arr(pwd);
+	free_arr(home);
 	return (prompt);
 }

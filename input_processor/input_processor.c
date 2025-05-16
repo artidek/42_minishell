@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/15 14:23:03 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/16 12:04:02 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	at_exit(char *input)
 		return (0);
 	temp = ft_split(input, ' ');
 	arrlen = arr_len(temp);
-	if (ft_strncmp(temp[0], "exit", 4) == 0 && ft_strlen(temp[0]) == 4)
+	if (*temp && ft_strncmp(temp[0], "exit", 4) == 0 && ft_strlen(temp[0]) == 4)
 	{
 		if (arrlen > 1 && arrlen < 3)
 		{
@@ -62,7 +62,7 @@ int	run_input_processor(void)
 	{
 		prompt = init_prompt();
 		input = read_input(prompt);
-		if (!at_exit(input))
+		if (!at_exit(input) || !input)
 		{
 			rl_clear_history();
 			free(prompt);
