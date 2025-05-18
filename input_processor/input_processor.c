@@ -3,77 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   input_processor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/16 12:04:02 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:56:40 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	at_exit(char *input)
-{
-	char	**temp;
-	int		arrlen;
-
-	if (!input)
-		return (0);
-	temp = ft_split(input, ' ');
-	arrlen = arr_len(temp);
-	if (*temp && ft_strncmp(temp[0], "exit", 4) == 0 && ft_strlen(temp[0]) == 4)
-	{
-		if (arrlen > 1 && arrlen < 3)
-		{
-			if (!isalldigit(temp[1]))
-				ft_printf("minishell: exit: %s: numeric argument required\n",
-					temp[1]);
-			else
-				write(STDOUT_FILENO, "exit\n", 5);
-		}
-		if (arrlen > 2)
-			ft_printf("minishell: exit: too many arguments\n");
-		free_arr(temp);
-		if (arrlen == 1)
-			write(STDOUT_FILENO, "exit\n", 5);
-		return (0);
-	}
-	free_arr(temp);
-	return (1);
-}
-
-static char	*read_input(char *prompt)
+static char	*read_input(t_main_dat *main_data)
 {
 	char	*input;
 
-	input = readline(prompt);
+	input = readline(main_data->input_data.prompt);
 	if (input && *input)
 		add_history(input);
 	return (input);
 }
 
-int	run_input_processor(void)
+int	run_input_processor(t_main_dat *main_data)
 {
-	char	*input;
-	char	*prompt;
-
 	rl_catch_signals = 0;
 	while (1)
 	{
-		prompt = init_prompt();
-		input = read_input(prompt);
-		if (!at_exit(input) || !input)
+		main_data->input_data.prompt = init_prompt();
+		main_data->input_data.input = read_input(main_data);
+		if (!main_data->input_data.input)
 		{
 			rl_clear_history();
-			free(prompt);
-			free(input);
+			free(main_data->input_data.prompt);
+			free(main_data->input_data.input);
+			write(1, "exit\n", 5);
 			return (0);
 		}
-		//run_command_processor(input);
-		if (input)
-			free(input);
-		if (prompt)
-			free(prompt);
+		run_command_processor(main_data);
+		if (main_data->input_data.input)
+			free(main_data->input_data.input);
+		if (main_data->input_data.prompt)
+			free(main_data->input_data.prompt);
 	}
 	return (0);
 }
