@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 21:33:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:07:39 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct s_main_dat
 {
 	int				stop_heredoc;
+	int				exit_code;
 	char			*oldpwd;
 	t_input_data	input_data;
 	t_seq			sequence;
@@ -30,6 +31,7 @@ int					absl(int num);
 int					isalldigit(char *str);
 int					arr_len(char **arr);
 int					comp_arr(char **arr1, char **arr2);
+int					check_valid(char **args);
 void				run_command_processor(t_main_dat *main_data);
 void				free_arr(char **arr);
 void				heredoc_in(char *input, t_main_dat *main_data);

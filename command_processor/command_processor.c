@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 21:47:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:26:47 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	run_command_processor(t_main_dat *main_data)
 	spl_in = ft_split(main_data->input_data.input, '|');
 	if (arr_len(spl_in) > 1)
 		main_data->sequence.pipe = 1;
-	printf("input %s\n", main_data->input_data.input);
+	if (!check_valid(spl_in))
+	{
+		free_arr(spl_in);
+		return;
+	}
 	extract_seq_it(spl_in);
 }

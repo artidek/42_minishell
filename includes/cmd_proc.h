@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 19:58:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:26:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <wait.h>
-
-typedef struct s_charset
-{
-	int					*count;
-	char				chr;
-	struct s_charset	*next;
-}						t_charset;
 
 typedef struct s_redir
 {
@@ -56,20 +49,14 @@ typedef struct s_seq
 	t_commands			*commands;
 }						t_seq;
 
-void					parse_input(char *input, t_seq **sequence);
 void					add_sequence(t_seq **sequence);
 void					clear_sequence(t_seq **sequence);
-void					clear_charset(t_charset **set);
-void					add_charset(t_charset **set, t_charset *new_set);
-void					clear_charset(t_charset **set);
 void					update_list(t_args **args, char *arg);
 void					ext_qt(char **arg, char **res, int *i);
 void					del_a(char *argument);
 void					add_node_a(t_args **lst, t_args *new);
 void					clear_list_a(t_args **lst, void (*del_a)(char *));
 void					delete_node_a(t_args *lst, void (*del_a)(char *));
-t_charset				*extract_string(char *str, char *delim_set);
-t_charset				*new_charset(char c);
 t_args					*create_node_a(char *argument);
 char					**split_arguments(char *arguments);
 char					**create_argv(t_args **args);
