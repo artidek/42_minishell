@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 09:44:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/17 19:19:29 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:52:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 
 typedef struct s_heredoc_in
 {
-	int				pipe;
 	int				*stop_heredoc;
 	char			*line;
 	char			**heredoc_data;
