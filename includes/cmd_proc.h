@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/21 19:37:06 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:34:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <unistd.h>
 # include <wait.h>
 
+# define HEREDOC 1
+# define REDIR_IN 2
+# define REDIR_OUT 3
+# define REDIR_APP 4
+
 typedef struct s_args
 {
 	char			*arg;
@@ -34,19 +39,26 @@ typedef struct s_commands
 	char			*path;
 	char			**argv;
 }					t_commands;
+
+typedef struct s_redir
+{
+	int				redir_type;
+	char			*file;
+	struct s_redir	*next;
+}					t_redir;
+
 typedef struct s_seq
 {
 	char			*temp_redir;
 	char			*temp_cmd;
-	t_list			*heredoc;
-	t_list			*redir_out;
-	t_list			*redir_append;
-	t_list			*redir_in;
+	t_redir			*redirect;
 	t_commands		commands;
 	struct s_seq	*next;
 }					t_seq;
 
 int					is_redir(char delim, char *args);
+void				clear_redirect(t_redir **redirect);
+void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);
 void				add_to_str(char **str_add, int size, char *str);
 void				add_sequence(t_seq **sequence);
@@ -57,8 +69,9 @@ void				del_a(char *argument);
 void				add_node_a(t_args **lst, t_args *new);
 void				clear_list_a(t_args **lst, void (*del_a)(char *));
 void				delete_node_a(t_args *lst, void (*del_a)(char *));
-t_args				*create_node_a(char *argument);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);
+t_redir				*new_redir(int type, char *file);
+t_args				*create_node_a(char *argument);
 
 #endif

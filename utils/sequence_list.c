@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sequence_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:59:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/21 11:57:21 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:26:19 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void del (void *data)
-{
-	char *temp;
-	temp = (char *)data;
-	if (!temp)
-		free(temp);
-}
 
 static t_seq	*new_sequence(void)
 {
@@ -31,10 +23,7 @@ static t_seq	*new_sequence(void)
 	new_seq->temp_redir = NULL;
 	new_seq->commands.path = NULL;
 	new_seq->commands.argv = NULL;
-	new_seq->heredoc = NULL;
-	new_seq->redir_append = NULL;
-	new_seq->redir_in = NULL;
-	new_seq->redir_out = NULL;
+	new_seq->redirect = NULL;
 	new_seq->next = NULL;
 	return (new_seq);
 }
@@ -43,21 +32,20 @@ void	clear_sequence(t_seq **sequence)
 {
 	t_seq	*temp;
 
-	temp = (*sequence);
-	while (temp)
+	temp = NULL;
+	while (*sequence)
 	{
-		if ((*sequence)->heredoc)
-			ft_lstclear(&((*sequence)->heredoc), del);
-		if ((*sequence)->redir_out)
-			ft_lstclear(&((*sequence)->redir_out), del);
-		if ((*sequence)->redir_in)
-			ft_lstclear(&((*sequence)->redir_in), del);
-		if ((*sequence)->redir_append)
-			ft_lstclear(&((*sequence)->redir_append), del);
+		temp = (*sequence)->next;
+		if ((*sequence)->temp_cmd)
+			free((*sequence)->temp_cmd);
+		if ((*sequence)->temp_redir)
+			free((*sequence)->temp_redir);
 		if ((*sequence)->commands.path)
 			free((*sequence)->commands.path);
 		if ((*sequence)->commands.argv)
 			free_arr((*sequence)->commands.argv);
+		if ((*sequence)->redirect)
+			clear_redirect(&((*sequence)->redirect));
 		free(*sequence);
 		*sequence = temp;
 	}

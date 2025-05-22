@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/21 12:23:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/22 12:34:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int					isalldigit(char *str);
 int					arr_len(char **arr);
 int					comp_arr(char **arr1, char **arr2);
 int					check_valid(char **args);
+void				fill_redir(t_main_dat *main_data);
 void				run_command_processor(t_main_dat *main_data);
 void				free_arr(char **arr);
 void				heredoc_in(char *input, t_main_dat *main_data);

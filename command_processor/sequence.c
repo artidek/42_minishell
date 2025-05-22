@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/21 21:34:43 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:28:43 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 	int	j;
 
 	j = 0;
-	if (str[j + 1] == ' ')
+	if ((str[j] == '<' && str[j + 1] == ' ') || (str[j] == '>' && str[j + 1] == ' '))
 	{
 		add_to_str(redir_str, 1, &str[j]);
 		j++;
 		*i += 1;
 		skip_space(&str[j], &j, i);
 	}
-		
 	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j + 2] == ' '))
 	{
 		add_to_str(redir_str, 1, &str[j]);
 		j += 2;
-		i += 2;
+		*i += 2;
 		skip_space(&str[j], &j, i);
 	}
 	while (str[j])
@@ -117,10 +116,6 @@ void	init_sequence(t_main_dat *main_data, char **in_arr)
 	while (temp)
 	{
 		split_input(&temp, in_arr[i]);
-		if (temp->temp_redir)
-			printf("%s\n", temp->temp_redir);
-		if (temp->temp_cmd)
-			printf("%s\n", temp->temp_cmd);
 		temp = temp->next;
 		i++;
 	}

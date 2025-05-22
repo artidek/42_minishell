@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
+#    By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/05/21 12:20:56 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/05/22 12:33:32 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFTPATH = libft/ft_printf/
 
-CMD_PROC = command_processor/command_processor.c command_processor/split_arguments.c command_processor/sequence.c
+CMD_PROC = command_processor/command_processor.c command_processor/split_arguments.c command_processor/sequence.c command_processor/redirect.c
 IN_PROC = input_processor/input_processor.c input_processor/prompt.c
 UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/processes.c utils/prompt_utils.c \
 		utils/spl_args_utils.c utils/arguments.c utils/valid.c utils/arguments.c utils/sequence_list.c utils/arguments.c utils/sequence_utils.c \
+		utils/redir_list.c
 
 UTILOBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(UTILS)))
 IN_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(IN_PROC)))
