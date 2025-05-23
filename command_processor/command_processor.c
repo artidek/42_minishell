@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 21:10:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:29:52 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,14 @@ void	run_command_processor(t_main_dat *main_data)
 	free_arr(spl_in);
 	if (!launch_redir(main_data->sequence))
 	{
-		dup2(stdin_cp, STDIN_FILENO);
-        dup2(stdout_cp, STDOUT_FILENO);
-        close(stdin_cp);
-        close(stdout_cp);
+		restore_sys_files(stdin_cp, stdout_cp);
 		clear_sequence(&(main_data->sequence));
 		main_data->sequence = NULL;
+		unlink("heredoc");
 		return;
 	}
-	dup2(stdin_cp, STDIN_FILENO);
-    dup2(stdout_cp, STDOUT_FILENO);
-	close(stdin_cp);
-    close(stdout_cp);
+	restore_sys_files(stdin_cp, stdout_cp);
+	unlink("heredoc");
 	clear_sequence(&(main_data->sequence));
 	main_data->sequence = NULL;
 }

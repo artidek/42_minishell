@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 20:10:35 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:47:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ typedef struct s_seq
 
 int					is_redir(char delim, char *args);
 int					launch_redir(t_seq *sequence);
+int					process_failed(pid_t pid);
+int					create_pipe(int *pipefd);
+int					heredoc(char *eof);
 void				clear_redirect(t_redir **redirect);
 void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);

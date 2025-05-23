@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 12:34:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:29:11 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void				run_command_processor(t_main_dat *main_data);
 void				free_arr(char **arr);
 void				heredoc_in(char *input, t_main_dat *main_data);
 void				init_sequence(t_main_dat *main_data, char **in_arr);
+void				sig_ignore(struct sigaction *sa_orig);
+void				sig_restore(struct sigaction *sa_orig);
+void				restore_sys_files(int stdin_cp, int stdout_cp);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

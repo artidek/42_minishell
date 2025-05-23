@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_processor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 18:56:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:33:39 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static char	*read_input(t_main_dat *main_data)
 
 int	run_input_processor(t_main_dat *main_data)
 {
-	rl_catch_signals = 0;
 	while (1)
 	{
 		main_data->input_data.prompt = init_prompt();

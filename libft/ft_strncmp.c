@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 22:44:21 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/03/10 11:56:10 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 12:38:22 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	str1;
 	unsigned char	str2;
 
+	if (!s1)
+	{
+		printf("found\n");
+		return (-1);
+	}
 	while (n > 0)
 	{
 		str1 = *(unsigned char *)s1;

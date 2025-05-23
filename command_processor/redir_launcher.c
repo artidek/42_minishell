@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_launcher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 21:06:31 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:42:58 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,36 @@ static int	start_redir(t_redir *redir)
 		if (!redir_append(redir->file))
 			return (0);
 	}
-	// if (redir->redir_type == HEREDOC)
-	// {
-	// 	if (!heredoc(redir->file))
-	// 		return (0);
-	// }
+	if (redir->redir_type == HEREDOC)
+	{
+		if (!heredoc(redir->file))
+	 		return (0);
+	}
 	return (1);
 }
 
 int	launch_redir(t_seq *sequence)
 {
 	t_redir	*redir;
+	t_redir *temp;
 
 	redir = sequence->redirect;
+	temp = redir;
 	if (!redir)
 		return (0);
+	while (temp)
+	{
+		if (temp->redir_type == HEREDOC)
+			heredoc(redir->file);
+		temp = temp->next;
+	}
 	while (redir)
 	{
-		if (!start_redir(redir))
+		if (redir->redir_type != HEREDOC)
+		{
+			if (!start_redir(redir))
 			return (0);
+		}
 		redir = redir->next;
 	}
 	return (1);
