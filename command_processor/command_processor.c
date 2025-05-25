@@ -3,43 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 16:29:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:27:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	extract_seq_it(char **spl_in, t_main_dat *main_data)
+static void	launch_sequence(t_main_dat *main_data)
 {
-	init_sequence(main_data, spl_in);
+	if (!main_data->pipe)
+		single_command(main_data);
+	restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
+	unlink("heredoc");
+	clear_sequence(&main_data->sequence);
+	main_data->sequence = NULL;
+}
+
+static void	argv_cmd(t_seq **sequence)
+{
+	t_seq	*seq;
+	char	**tmp;
+
+	seq = *sequence;
+	while (seq)
+	{
+		if (strrchr(seq->commands->argv[0], '/'))
+		{
+			tmp = ft_split(seq->commands->argv[0], '/');
+			free(seq->commands->argv[0]);
+			seq->commands->argv[0] = ft_strdup(tmp[arr_len(tmp) - 1]);
+			free_arr(tmp);
+		}
+		seq = seq->next;
+	}
+}
+
+static char	**get_paths(t_shenv *env)
+{
+	char	**paths;
+
+	paths = NULL;
+	while (env)
+	{
+		if (strncmp("PATH", env->key, ft_strlen(env->key)) == 0)
+		{
+			paths = ft_split(env->value, ':');
+			return (paths);
+		}
+		env = env->next;
+	}
+	if (!paths)
+	{
+		paths = malloc(sizeof(char *) * 2);
+		paths[0] = ft_strdup("/");
+		paths[1] = NULL;
+	}
+	return (paths);
+}
+
+static int	init_commands(t_main_dat *main_data)
+{
+	char	**paths;
+
+	paths = get_paths(main_data->env_cp);
+	if (!fill_commands(main_data, paths))
+	{
+		free_arr(paths);
+		restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
+		unlink("heredoc");
+		clear_sequence(&main_data->sequence);
+		main_data->sequence = NULL;
+		return (0);
+	}
+	free_arr(paths);
+	return (1);
 }
 
 void	run_command_processor(t_main_dat *main_data)
 {
 	char	**spl_in;
-	int	stdin_cp;
-	int	stdout_cp;
 
-	stdin_cp = dup(STDIN_FILENO);
-	stdout_cp = dup(STDOUT_FILENO);
+	main_data->stdin_cp = dup(STDIN_FILENO);
+	main_data->stdout_cp = dup(STDOUT_FILENO);
 	if (!*(main_data->input_data.input))
-		return;
+		return ;
 	spl_in = ft_split(main_data->input_data.input, '|');
-	extract_seq_it(spl_in, main_data);
+	init_sequence(main_data, spl_in);
 	fill_redir(main_data);
 	free_arr(spl_in);
-	if (!launch_redir(main_data->sequence))
-	{
-		restore_sys_files(stdin_cp, stdout_cp);
-		clear_sequence(&(main_data->sequence));
-		main_data->sequence = NULL;
-		unlink("heredoc");
-		return;
-	}
-	restore_sys_files(stdin_cp, stdout_cp);
+	if (!init_commands(main_data))
+		return ;
+	argv_cmd(&(main_data->sequence));
+	launch_sequence(main_data);
+	main_data->pipe = 0;
+	restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
 	unlink("heredoc");
 	clear_sequence(&(main_data->sequence));
 	main_data->sequence = NULL;

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:32:29 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 17:30:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:58:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static char	*get_home_inner(char **pwd, int len_home, int len_pwd)
 			temp = ft_strdup (str2);
 			free(str2);
 			str2 = ft_strjoin(temp, pwd[len_home]);
+			free(temp);
 		}
 		len_home++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 14:47:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/25 21:05:46 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_seq
 	char			*temp_redir;
 	char			*temp_cmd;
 	t_redir			*redirect;
-	t_commands		commands;
+	t_commands		*commands;
 	struct s_seq	*next;
 }					t_seq;
 
@@ -62,6 +62,8 @@ int					launch_redir(t_seq *sequence);
 int					process_failed(pid_t pid);
 int					create_pipe(int *pipefd);
 int					heredoc(char *eof);
+int					check_exist(char *path);
+int					redir_in(char *file);
 void				clear_redirect(t_redir **redirect);
 void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);
@@ -74,6 +76,10 @@ void				del_a(char *argument);
 void				add_node_a(t_args **lst, t_args *new);
 void				clear_list_a(t_args **lst, void (*del_a)(char *));
 void				delete_node_a(t_args *lst, void (*del_a)(char *));
+void				add_path(char *path, t_seq **sequence);
+void				trim_arg(char **arg);
+void				init_str(char **str, char **array);
+char				*find_path(char *cmd, char **paths);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);
 t_redir				*new_redir(int type, char *file);

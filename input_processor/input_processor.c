@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_processor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 14:33:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/24 23:52:03 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	run_input_processor(t_main_dat *main_data)
 			rl_clear_history();
 			free(main_data->input_data.prompt);
 			free(main_data->input_data.input);
+			freeenv(main_data->env_cp);
 			write(1, "exit\n", 5);
 			return (0);
 		}

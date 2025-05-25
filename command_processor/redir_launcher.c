@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_launcher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 16:42:58 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/25 21:10:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	redir_out(char *file)
 	return (1);
 }
 
-static int	redir_in(char *file)
+int	redir_in(char *file)
 {
 	int	fd;
 
@@ -71,11 +71,6 @@ static int	start_redir(t_redir *redir)
 		if (!redir_append(redir->file))
 			return (0);
 	}
-	if (redir->redir_type == HEREDOC)
-	{
-		if (!heredoc(redir->file))
-	 		return (0);
-	}
 	return (1);
 }
 
@@ -87,11 +82,11 @@ int	launch_redir(t_seq *sequence)
 	redir = sequence->redirect;
 	temp = redir;
 	if (!redir)
-		return (0);
+		return (1);
 	while (temp)
 	{
 		if (temp->redir_type == HEREDOC)
-			heredoc(redir->file);
+			heredoc(temp->file);
 		temp = temp->next;
 	}
 	while (redir)
@@ -99,7 +94,7 @@ int	launch_redir(t_seq *sequence)
 		if (redir->redir_type != HEREDOC)
 		{
 			if (!start_redir(redir))
-			return (0);
+				return (0);
 		}
 		redir = redir->next;
 	}

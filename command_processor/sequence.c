@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 15:28:43 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:09:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 	}
 	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j + 2] == ' '))
 	{
-		add_to_str(redir_str, 1, &str[j]);
+		add_to_str(redir_str, 2, &str[j]);
 		j += 2;
 		*i += 2;
 		skip_space(&str[j], &j, i);

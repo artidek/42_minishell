@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:04:55 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 16:20:37 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/25 21:10:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	handle_sig(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "\n", 3);
+	write(STDOUT_FILENO, "\n", 1);
 	exit(1);
 }
 
@@ -43,7 +43,6 @@ static	void start_heredoc(char *eof, int fd)
 		free(line);
 	}
 }
-
 int	heredoc(char *eof)
 {
 	int	fd;
@@ -63,6 +62,7 @@ int	heredoc(char *eof)
 	}
 	waitpid(pid, NULL, 0);
 	close(fd);
+	redir_in("heredoc");
 	sig_restore(&sa_orig);
 	return (1);
 }

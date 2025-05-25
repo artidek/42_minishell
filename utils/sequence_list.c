@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:59:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/22 15:26:19 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/25 11:09:52 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static t_seq	*new_sequence(void)
 		return (NULL);
 	new_seq->temp_cmd = NULL;
 	new_seq->temp_redir = NULL;
-	new_seq->commands.path = NULL;
-	new_seq->commands.argv = NULL;
+	new_seq->commands = malloc(sizeof(t_commands));
+	new_seq->commands->argv = NULL;
+	new_seq->commands->path = NULL;
 	new_seq->redirect = NULL;
 	new_seq->next = NULL;
 	return (new_seq);
@@ -40,10 +41,12 @@ void	clear_sequence(t_seq **sequence)
 			free((*sequence)->temp_cmd);
 		if ((*sequence)->temp_redir)
 			free((*sequence)->temp_redir);
-		if ((*sequence)->commands.path)
-			free((*sequence)->commands.path);
-		if ((*sequence)->commands.argv)
-			free_arr((*sequence)->commands.argv);
+		if ((*sequence)->commands->path)
+			free((*sequence)->commands->path);
+		if ((*sequence)->commands->argv)
+			free_arr((*sequence)->commands->argv);
+		if ((*sequence)->commands)
+			free((*sequence)->commands);
 		if ((*sequence)->redirect)
 			clear_redirect(&((*sequence)->redirect));
 		free(*sequence);
