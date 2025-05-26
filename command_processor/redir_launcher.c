@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_launcher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 21:10:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:56:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	launch_redir(t_seq *sequence)
 			heredoc(temp->file);
 		temp = temp->next;
 	}
+	if (access("heredoc", R_OK) != -1)
+			redir_in("heredoc");
 	while (redir)
 	{
 		if (redir->redir_type != HEREDOC)

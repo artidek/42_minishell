@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 17:21:08 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:39:50 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int					ft_exit(t_main_dat *main_data, char **gv);
 int					ft_unset(t_main_dat *main_data, char **gv);
 int					fill_commands(t_main_dat *main_data, char **paths);
 int					built_in(char *arg);
+int					is_builtin(t_main_dat *main_data, t_seq *seq);
 void				clear_command_proc(t_main_dat *main_data);
 void				fill_redir(t_main_dat *main_data);
 void				run_command_processor(t_main_dat *main_data);
@@ -55,6 +56,9 @@ void				sig_restore(struct sigaction *sa_orig);
 void				restore_sys_files(int stdin_cp, int stdout_cp);
 void				single_command(t_main_dat *main_data);
 void				expandable(char **arg, t_main_dat *main_data);
+void				start_piping(t_main_dat *main_data);
+void				check_double_quote(char **arg, t_main_dat *main_data);
+void				check_single_quote(char **arg, t_main_dat *main_data);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

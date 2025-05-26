@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 21:05:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:01:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
+# include <termios.h>
 # include <unistd.h>
 # include <wait.h>
 
@@ -79,6 +80,8 @@ void				delete_node_a(t_args *lst, void (*del_a)(char *));
 void				add_path(char *path, t_seq **sequence);
 void				trim_arg(char **arg);
 void				init_str(char **str, char **array);
+void				disable_echoctl(void);
+void				enable_echoctl(void);
 char				*find_path(char *cmd, char **paths);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);

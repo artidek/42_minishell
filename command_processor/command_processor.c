@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 12:27:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 13:41:24 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	launch_sequence(t_main_dat *main_data)
 {
 	if (!main_data->pipe)
 		single_command(main_data);
+	else
+		start_piping(main_data);
 	restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
 	unlink("heredoc");
 	clear_sequence(&main_data->sequence);
@@ -69,6 +71,8 @@ static int	init_commands(t_main_dat *main_data)
 	char	**paths;
 
 	paths = get_paths(main_data->env_cp);
+	if (!main_data->sequence->temp_cmd)
+		return (1);
 	if (!fill_commands(main_data, paths))
 	{
 		free_arr(paths);
@@ -96,7 +100,8 @@ void	run_command_processor(t_main_dat *main_data)
 	free_arr(spl_in);
 	if (!init_commands(main_data))
 		return ;
-	argv_cmd(&(main_data->sequence));
+	if (main_data->sequence->commands->argv)
+		argv_cmd(&(main_data->sequence));
 	launch_sequence(main_data);
 	main_data->pipe = 0;
 	restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);

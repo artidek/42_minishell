@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/24 23:59:43 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:03:57 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	**create_argv(t_args **args)
 		temp = temp->next;
 		size++;
 	}
+	if (size == 0)
+		return (NULL);
 	temp = *args;
 	argv = (char **)malloc(sizeof(char *) * (size + 2));
 	size = 0;

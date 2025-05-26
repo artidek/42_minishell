@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 20:06:47 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:52:36 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 	i = 0;
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
 	argv = (*sequence)->commands->argv;
+	printf("argv %s\n", argv[1]);
 	if (!check_valid((*sequence)->commands->argv))
 		return (0);
-	while (argv[i])
+	while (argv && argv[i])
 	{
-		if (argv[i][0] == '$' || argv[i][0] == '\"')
+		if (argv[i][0] == '$')
 			expandable(&(*sequence)->commands->argv[i], main_dat);
-		trim_arg(&(*sequence)->commands->argv[i]);
+		if (argv[i][0] == '\"')
+			check_double_quote(&(*sequence)->commands->argv[i], main_dat);
+		if (argv[i][0] == '\'')
+			check_double_quote(&(*sequence)->commands->argv[i], main_dat);
 		i++;
 	}
 	return (1);
@@ -82,7 +86,7 @@ int	fill_commands(t_main_dat *main_data, char **paths)
 	{
 		if (!init_args(main_data, &temp))
 			return (0);
-		if (!init_path(&temp, paths))
+		if (temp->commands->argv && !init_path(&temp, paths))
 		{
 			perror("minishell");
 			return (0);

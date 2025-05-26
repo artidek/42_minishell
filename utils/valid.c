@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:20:43 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/19 15:02:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:06:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	 check_valid(char **args)
 	int	i;
 
 	i = 0;
-	while(args[i])
+	while(args && args[i])
 	{
 		if (check_semicol(args[i]))
 		{

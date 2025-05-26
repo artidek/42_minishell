@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 20:39:07 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:00:31 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	expandable(char **arg, t_main_dat *main_data)
 		expand(arg, main_data, *arg + 1);
 		return ;
 	}
-	else if (**arg == '\"')
+	else if (**arg == '\"' || **arg == '\'')
 	{
 		if (is_expandable(*arg))
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:04:55 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 21:10:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:58:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	heredoc(char *eof)
 	}
 	waitpid(pid, NULL, 0);
 	close(fd);
-	redir_in("heredoc");
 	sig_restore(&sa_orig);
 	return (1);
 }
