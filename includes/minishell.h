@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 18:39:50 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:05:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void				expandable(char **arg, t_main_dat *main_data);
 void				start_piping(t_main_dat *main_data);
 void				check_double_quote(char **arg, t_main_dat *main_data);
 void				check_single_quote(char **arg, t_main_dat *main_data);
+void				expand(t_expand **exp, t_main_dat *main_data);
+void				expandable(char **arg, t_main_dat *main_data);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

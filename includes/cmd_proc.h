@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 11:01:30 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:07:33 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int					create_pipe(int *pipefd);
 int					heredoc(char *eof);
 int					check_exist(char *path);
 int					redir_in(char *file);
+int					close_quotes(char **arg);
+int					check_unclosed(char ***argv);
+int					check_quotes(char *arg);
 void				clear_redirect(t_redir **redirect);
 void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);
@@ -82,6 +85,8 @@ void				trim_arg(char **arg);
 void				init_str(char **str, char **array);
 void				disable_echoctl(void);
 void				enable_echoctl(void);
+void				extract_outer_string(char **res, char *arg, int *i,
+						t_args **args);
 char				*find_path(char *cmd, char **paths);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);

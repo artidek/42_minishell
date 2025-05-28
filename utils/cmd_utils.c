@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 18:52:36 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:58:08 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,30 @@ static int	init_path(t_seq **sequence, char **paths)
 		i++;
 	}
 	if (built_in((*sequence)->commands->argv[0]) < 0)
-		(*sequence)->commands->path = find_path((*sequence)->commands->argv[0], paths);
-	if (!(*sequence)->commands->path && built_in((*sequence)->commands->argv[0]) < 0)
+		(*sequence)->commands->path = find_path((*sequence)->commands->argv[0],
+				paths);
+	if (!(*sequence)->commands->path
+		&& built_in((*sequence)->commands->argv[0]) < 0)
 		return (0);
 	return (1);
 }
 
 static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 {
-	int	i;
+	int		i;
 	char	**argv;
 
 	i = 0;
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
 	argv = (*sequence)->commands->argv;
-	printf("argv %s\n", argv[1]);
 	if (!check_valid((*sequence)->commands->argv))
 		return (0);
-	while (argv && argv[i])
+	if (!check_unclosed(&(*sequence)->commands->argv))
+		return (0);
+	while (argv[i])
 	{
-		if (argv[i][0] == '$')
-			expandable(&(*sequence)->commands->argv[i], main_dat);
-		if (argv[i][0] == '\"')
-			check_double_quote(&(*sequence)->commands->argv[i], main_dat);
-		if (argv[i][0] == '\'')
-			check_double_quote(&(*sequence)->commands->argv[i], main_dat);
+		expandable(&(*sequence)->commands->argv[i], main_dat);
+		trim_arg(&(*sequence)->commands->argv[i]);
 		i++;
 	}
 	return (1);

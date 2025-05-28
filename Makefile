@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+         #
+#    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/05/26 18:45:58 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/05/29 00:16:29 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,16 @@ CMD_PROC = command_processor/command_processor.c command_processor/split_argumen
 IN_PROC = input_processor/input_processor.c input_processor/prompt.c input_processor/env.c
 UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/processes.c utils/prompt_utils.c \
 		utils/spl_args_utils.c utils/arguments.c utils/valid.c utils/arguments.c utils/sequence_list.c utils/arguments.c utils/sequence_utils.c \
-		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/expand.c utils/tty_ctl.c utils/expand.c utils/parsing.c
+		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/tty_ctl.c utils/expand.c utils/parsing.c utils/quotes.c
 BUILTINS = builtins/cdpwd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/exp.c builtins/unset.c
+EXPAND = expand/expand_list.c expand/expand.c expand/parsing.c expand/utils.c
 
 UTILOBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(UTILS)))
 IN_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(IN_PROC)))
 CMD_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(CMD_PROC)))
 BUILTINS_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(BUILTINS)))
-OBJS = $(BUILTINS_OBJS) $(IN_PROC_OBJS) $(UTILOBJS) $(CMD_PROC_OBJS)
+EXPAND_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(EXPAND)))
+OBJS = $(BUILTINS_OBJS) $(IN_PROC_OBJS) $(UTILOBJS) $(CMD_PROC_OBJS) $(EXPAND_OBJS)
 
 LIBFT = $(LIBFTPATH)/libftprintf.a
 LIBR = minishell.a
@@ -37,6 +39,10 @@ NAME = minishell
 HOSTNM := @$(shell hostname)
 
 ./objs/%.o: ./builtins/%.c
+	@mkdir -p objs
+	@$(CC) $(CFLAGS) -DHSTNM=\"$(HOSTNM)\" -c $< -o $@
+
+./objs/%.o: ./expand/%.c
 	@mkdir -p objs
 	@$(CC) $(CFLAGS) -DHSTNM=\"$(HOSTNM)\" -c $< -o $@
 

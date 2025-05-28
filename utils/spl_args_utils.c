@@ -3,29 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 17:03:57 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/28 23:55:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ext_qt(char **arg, char **res, int *i)
+void	extract_outer_string(char **res, char *arg, int *i, t_args **args)
 {
-	(*res)[*i] = *(*arg);
-	(*i)++;
-	(*arg)++;
-	(*res)[*i] = *(*arg);
-	(*i)++;
-	(*arg)++;
+	int	j;
+
+	j = 0;
+	while (arg[j])
+	{
+		if (*res && (arg[j] == '\"' || arg[j] == '\'' || arg[j] == ' '))
+		{
+			add_node_a(args, create_node_a(ft_strdup(*res)));
+			free(*res);
+			*res = NULL;
+			return ;
+		}
+		add_to_str(res, 1, &arg[j]);
+		j++;
+		*i += 1;
+	}
 }
 
 char	**create_argv(t_args **args)
 {
-	int			size;
-	char		**argv;
+	int		size;
+	char	**argv;
 	t_args	*temp;
 
 	size = 0;
@@ -35,8 +45,6 @@ char	**create_argv(t_args **args)
 		temp = temp->next;
 		size++;
 	}
-	if (size == 0)
-		return (NULL);
 	temp = *args;
 	argv = (char **)malloc(sizeof(char *) * (size + 2));
 	size = 0;
@@ -48,4 +56,23 @@ char	**create_argv(t_args **args)
 	}
 	argv[size] = NULL;
 	return (argv);
+}
+
+int	check_unclosed(char ***argv)
+{
+	int		i;
+	char	**temp;
+
+	i = 0;
+	temp = *argv;
+	while (temp[i])
+	{
+		if (!check_quotes(temp[i]))
+		{
+			if (!close_quotes(&(*argv)[i]))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }

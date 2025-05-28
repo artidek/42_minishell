@@ -6,119 +6,105 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:06:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/24 23:56:10 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:17:02 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*single_quote_string(char **arg, int size)
+static void	single_quote_string(char **res, char *arg, int * i)
 {
-	char	*res;
-	char	*ret_res;
+	int	j;
 
-	res = malloc(sizeof(char) * size + 1);
-	ret_res = res;
-	while (*(*arg))
+	j = 0;
+	while (arg[j])
 	{
-		*res = *(*arg);
-		res++;
-		(*arg)++;
-		if (*(*arg) == 39)
+		if (arg[j] == '\'' && j > 0)
 		{
-			*res = *(*arg);
-			res++;
-			(*arg)++;
-			break;
+			*i += 1;
+			add_to_str(res, 1 , &arg[j]);
+			return;
 		}
+		if (arg[j])
+			add_to_str(res, 1, &arg[j]);
+		j++;
+		*i += 1;
 	}
-	*res = 0;
-	return (ret_res);
 }
 
-static char	*double_quote_string(char **arg, int size)
+static void	double_quote_string(char **res, char *arg, int * i)
 {
-	int		i;
-	char	*res;
+	int	j;
 
-	i = 0;
-	res = malloc(sizeof(char) * size + 1);
-	while (*(*arg))
+	j = 0;
+	while (arg[j])
 	{
-		res[i] = *(*arg);
-		i++;
-		(*arg)++;
-		if (*(*arg) == 34)
+		if (arg[j] == '\"' && j > 0)
 		{
-			res[i] = *(*arg);
-			i++;
-			(*arg)++;
-			break;
+			*i += 1;
+			add_to_str(res, 1 , &arg[j]);
+			return;
 		}
+		if (arg[j])
+			add_to_str(res, 1, &arg[j]);
+		j++;
+		*i += 1;
 	}
-	res[i] = 0;
-	return (res);
 }
 
-static char	*extract_inner_str(char **arg, int size)
+static void	extract_inner_str(char **res, char *arg , int *i)
 {
-	char	*res;
-
-	if (*(*arg) == 34)
+	if (*arg == 34)
 	{
-		res = double_quote_string(arg, size);
-		return (res);
+		double_quote_string(res, arg, i);
 	}
 	else
-		res = single_quote_string(arg, size);
-	return (res);
+		single_quote_string(res, arg, i);
 }
 
-static char	*extract_arg(char **arg, int size)
+static void	extract_arg(char *arg, char **res, t_args **args)
 {
-	char	*res;
-	char	*cp_res;
-	int		i;
-
+	int	i;
+	
 	i = 0;
-	if (*(*arg) == 34 || *(*arg) == 39)
+	while (arg[i])
 	{
-		res = extract_inner_str(arg, size);
-		return (res);
+		if (arg[i] == '\"' || arg[i] == '\'')
+		{
+			extract_inner_str(res,&arg[i], &i);
+			add_node_a(args, create_node_a(ft_strdup(*res)));
+			free(*res);
+			*res = NULL;
+		}
+		if (*res && arg[i] && arg[i] == ' ')
+		{
+			add_node_a(args, create_node_a(ft_strdup(*res)));
+			free(*res);
+			*res = NULL;
+		}
+		if (arg[i])
+			extract_outer_string(res, &arg[i], &i, args);
+		if (!arg[i] && *res)
+			add_node_a(args, create_node_a(ft_strdup(*res)));
 	}
-	res = malloc(sizeof(char) * size + 1);
-	while (*(*arg) && *(*arg) != ' ')
-	{
-		res[i] = *(*arg);
-		(*arg)++;
-		i++;
-	}
-	res[i] = '\0';
-	cp_res = ft_strdup(res);
-	free(res);
-	return (cp_res);
 }
 
 char	**split_arguments(char *arguments)
 {
 	t_args	*args;
-	char		*temp;
-	char		*trimed;
-	char		**argv;
-	int			size;
+	char	*res;
+	char	*temp;
+	char	**argv;
 
 	args = NULL;
-	trimed = ft_strtrim(arguments, " ");
-	temp = trimed;
-	size = ft_strlen(trimed);
-	while (*temp)
-	{
-		if (*temp != ' ')
-			add_node_a(&args, create_node_a(extract_arg(&temp, size)));
-		if (*temp)
-			temp++;
-	}
-	free(trimed);
+	res = NULL;
+	if (!arguments || !*arguments)
+		return (NULL);
+	temp = ft_strtrim(arguments, " ");
+	extract_arg(temp, &res, &args);
+	if (res)
+		free(res);
+	free(temp);
 	argv = create_argv(&args);
 	clear_list_a(&args, del_a);
 	return (argv);

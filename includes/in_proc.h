@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 09:44:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/20 11:52:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 00:02:46 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@
 #  define HSTNM "hostname"
 # endif
 
-typedef struct s_heredoc_in
+typedef struct s_expand
 {
-	int				*stop_heredoc;
-	char			*line;
-	char			**heredoc_data;
-}					t_heredoc_in;
+	int				exp;
+	char			*exp_str;
+	struct s_expand	*next;
+}					t_expand;
 
 typedef struct s_input_data
 {
-	t_heredoc_in	heredoc_in;
 	char			*prompt;
 	char			*input;
 }					t_input_data;
@@ -49,6 +48,12 @@ typedef struct s_input_data
 int					alloc_str(char **str, int size);
 int					is_heredoc(char *input);
 char				*init_prompt(void);
+void				add_expand(t_expand **exp, t_expand *new_exp);
+void				clear_expand(t_expand **exp);
+void				skip_sp(char **str, char *arg, int *i);
+void				update_expand(t_expand **exp, char **str, int ex);
+void				join_expanded(char **arg, t_expand *exp);
 void				seg_init(int signal, void(sig_handler)(int));
+t_expand			*new_expand(char *exp_str, int exp);
 
 #endif
