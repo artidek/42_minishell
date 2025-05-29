@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:50:38 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 18:00:43 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 20:25:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ char	*rebuild_arg(char **argv)
 		add_to_str(&res, ft_strlen(argv[i]), argv[i]);
 		i++;
 	}
-	printf("new_arg %s\n", res);
 	return (res);
 }
 
 void	write_quotes(int write_end, char *input)
 {
-	write(write_end, "\n", 2);
+	char	*temp;
+
+	temp = ft_strdup(input);
+	free(input);
+	input = ft_strjoin("\n", temp);
+	free(temp);
 	write(write_end, input, ft_strlen(input) + 1);
 	free(input);
 }

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:06:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 18:51:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:08:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,6 @@ char	**split_arguments(char *arguments)
 		free(res);
 	free(temp);
 	argv = create_argv(&args);
-	int i = 0;
-	while (argv[i])
-	{
-		printf("arg initial %s\n", argv[i]);
-		i++;
-	}
 	clear_list_a(&args, del_a);
 	return (argv);
 }

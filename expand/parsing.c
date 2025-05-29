@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 18:41:32 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:46:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ static void	single_quote(char **arg, t_expand **exp)
 	{
 		if ((*arg)[i] == '\'' && i > 0)
 			s_q_expand(&(*arg)[i], exp, &i);
-		add_to_str(&str, 1, (*arg) + i);
-		i++;
+		if ((*arg)[i])
+		{
+			add_to_str(&str, 1, (*arg) + i);
+			i++;
+		}
 	}
 	update_expand(exp, &str, 0);
 }

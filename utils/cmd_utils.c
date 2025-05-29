@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 18:32:41 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:12:09 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 
 	i = 0;
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
-	argv = (*sequence)->commands->argv;
 	if (!check_valid((*sequence)->commands->argv))
 		return (0);
 	if (!check_unclosed(&(*sequence)->commands->argv))
 		return (0);
+	argv = (*sequence)->commands->argv;
 	while (argv[i])
 	{
 		expandable(&(*sequence)->commands->argv[i], main_dat);
