@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:06:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 00:17:02 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 18:51:39 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,14 @@ static void	extract_arg(char *arg, char **res, t_args **args)
 		if (arg[i] == '\"' || arg[i] == '\'')
 		{
 			extract_inner_str(res,&arg[i], &i);
-			add_node_a(args, create_node_a(ft_strdup(*res)));
-			free(*res);
-			*res = NULL;
+			update_args(res, args);
 		}
 		if (*res && arg[i] && arg[i] == ' ')
-		{
-			add_node_a(args, create_node_a(ft_strdup(*res)));
-			free(*res);
-			*res = NULL;
-		}
+			update_args(res, args);
 		if (arg[i])
 			extract_outer_string(res, &arg[i], &i, args);
-		if (!arg[i] && *res)
-			add_node_a(args, create_node_a(ft_strdup(*res)));
 	}
+	update_args(res, args);
 }
 
 char	**split_arguments(char *arguments)
@@ -106,6 +99,12 @@ char	**split_arguments(char *arguments)
 		free(res);
 	free(temp);
 	argv = create_argv(&args);
+	int i = 0;
+	while (argv[i])
+	{
+		printf("arg initial %s\n", argv[i]);
+		i++;
+	}
 	clear_list_a(&args, del_a);
 	return (argv);
 }

@@ -6,11 +6,21 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/28 23:55:21 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:57:39 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	update_args(char **res, t_args **args)
+{
+	if (*res)
+	{
+		add_node_a(args, create_node_a(ft_strdup(*res)));
+		free(*res);
+		*res = NULL;
+	}
+}
 
 void	extract_outer_string(char **res, char *arg, int *i, t_args **args)
 {
@@ -62,6 +72,7 @@ int	check_unclosed(char ***argv)
 {
 	int		i;
 	char	**temp;
+	char	*new_arg;
 
 	i = 0;
 	temp = *argv;
@@ -71,6 +82,12 @@ int	check_unclosed(char ***argv)
 		{
 			if (!close_quotes(&(*argv)[i]))
 				return (0);
+			new_arg = rebuild_arg(*argv);
+			free_arr(*argv);
+			*argv = NULL;
+			*argv = split_arguments(new_arg);
+			free(new_arg);
+			return (1);
 		}
 		i++;
 	}

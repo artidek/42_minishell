@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_ms.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:38:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 17:10:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:14:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	start_process(t_seq *seq, int *pipefd, int prev_pipe, t_main_dat *ma
 	{
 		if (built_in(seq->commands->argv[0]) != -1)
 		{
-			printf("builtin\n");
 			if (prev_pipe != STDIN_FILENO)
 			{
 				dup2(prev_pipe, STDIN_FILENO);

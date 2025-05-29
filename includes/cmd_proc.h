@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 00:07:33 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:53:58 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int					redir_in(char *file);
 int					close_quotes(char **arg);
 int					check_unclosed(char ***argv);
 int					check_quotes(char *arg);
+int					stop_quotes(char quote, char *input);
 void				clear_redirect(t_redir **redirect);
 void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);
@@ -81,12 +82,14 @@ void				add_node_a(t_args **lst, t_args *new);
 void				clear_list_a(t_args **lst, void (*del_a)(char *));
 void				delete_node_a(t_args *lst, void (*del_a)(char *));
 void				add_path(char *path, t_seq **sequence);
-void				trim_arg(char **arg);
 void				init_str(char **str, char **array);
 void				disable_echoctl(void);
 void				enable_echoctl(void);
 void				extract_outer_string(char **res, char *arg, int *i,
 						t_args **args);
+void				update_args(char **res, t_args **args);
+void				write_quotes(int write_end, char *input);
+char				*rebuild_arg(char **argv);
 char				*find_path(char *cmd, char **paths);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);

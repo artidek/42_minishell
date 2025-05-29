@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:00:47 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/28 23:27:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:35:39 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ void	add_expand(t_expand **exp, t_expand *new_exp)
 {
 	t_expand *temp;
 
-	if (!exp)
+	if (!*exp)
 	{
 		*exp = new_exp;
 		return ;
 	}
 	temp = *exp;
-	while (temp->next)
+	while(temp->next)
 		temp = temp->next;
-	temp = new_exp;
+	temp->next = new_exp;
 }
 
 void	clear_expand(t_expand **exp)

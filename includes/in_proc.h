@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 09:44:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 00:02:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:50:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				skip_sp(char **str, char *arg, int *i);
 void				update_expand(t_expand **exp, char **str, int ex);
 void				join_expanded(char **arg, t_expand *exp);
 void				seg_init(int signal, void(sig_handler)(int));
+void				s_q_expand(char *arg, t_expand **exp, int *i);
 t_expand			*new_expand(char *exp_str, int exp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 22:58:47 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/28 23:55:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:32:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,14 @@ static void	get_quotes(char quote, int write_end)
 			close(write_end);
 			exit(1);
 		}
-		if (*input && strrchr(input, quote))
+		if (*input && stop_quotes(quote, input))
 		{
-			write(write_end, input, ft_strlen(input) + 1);
-			free(input);
+			write_quotes(write_end, input);
 			close(write_end);
 			exit(0);
 		}
 		if (*input)
-			write(write_end, input, ft_strlen(input) + 1);
+			write_quotes(write_end, input);
 	}
 }
 
