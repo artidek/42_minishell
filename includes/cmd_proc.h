@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 17:53:58 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:57:50 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void				extract_outer_string(char **res, char *arg, int *i,
 						t_args **args);
 void				update_args(char **res, t_args **args);
 void				write_quotes(int write_end, char *input);
+void				clean_up_arg(char ***arg);
 char				*rebuild_arg(char **argv);
 char				*find_path(char *cmd, char **paths);
 char				**split_arguments(char *arguments);

@@ -2,5 +2,6 @@
 	"files.associations": {
 		"libftprintf.h": "c",
 		"history.h": "c"
-	}
+	},
+	"makefile.configureOnOpen": false
 }

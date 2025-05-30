@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 21:12:09 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:34:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 {
 	int		i;
 	char	**argv;
-	char	*trimmed;
 
 	i = 0;
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
@@ -56,12 +55,9 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 	while (argv[i])
 	{
 		expandable(&(*sequence)->commands->argv[i], main_dat);
-		trimmed = ft_strtrim((*sequence)->commands->argv[i], "\'\"");
-		free((*sequence)->commands->argv[i]);
-		(*sequence)->commands->argv[i] = ft_strdup(trimmed);
-		free(trimmed);
 		i++;
 	}
+	clean_up_arg(&(*sequence)->commands->argv);
 	return (1);
 }
 

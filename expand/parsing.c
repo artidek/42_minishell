@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 21:46:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:01:07 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void	double_quote(char **arg, t_expand **exp)
-{
-	(void)*arg;
-	(void)*exp;
-	return;
-}
 
 static void	n_q_inner(char *arg,  int *i, t_expand **exp)
 {
@@ -27,7 +20,7 @@ static void	n_q_inner(char *arg,  int *i, t_expand **exp)
 	j = 1;
 	*i += 1;
 	str = NULL;
-	while (arg[j])
+	while (arg[j] && arg[j] != '\"' && arg[j] != '\'' && arg[j] != ' ')
 	{
 		if (arg[j] != '$')
 			add_to_str(&str, 1, arg + j);
@@ -62,11 +55,42 @@ static void	no_quote(char **arg, t_expand **exp)
 	update_expand(exp, &str, 0);
 }
 
+static void	double_quote(char **arg, t_expand **exp)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	str = NULL;
+	while ((*arg)[i])
+	{
+		if ((*arg)[i] == '\'' && i > 0)
+		{
+			add_to_str(&str, 1, (*arg) + i);
+			update_expand(exp, &str, 0);
+			s_q_expand(&(*arg)[i], exp, &i);
+		}
+		if ((*arg)[i] == '$')
+		{
+			update_expand(exp, &str, 0);
+			n_q_inner(&(*arg)[i], &i, exp);
+		}
+		if ((*arg)[i] != '$')
+		{
+			add_to_str(&str, 1, (*arg) + i);
+			i++;
+		}
+	}
+	if (str)
+	 update_expand(exp, &str, 0);
+	return;
+}
+
 static void	single_quote(char **arg, t_expand **exp)
 {
 	int	i;
 	char	*str;
-	
+
 	i = 0;
 	str = NULL;
 	while ((*arg)[i])

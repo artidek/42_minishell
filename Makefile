@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
+#    By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/05/29 17:34:10 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/05/30 15:58:31 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ CMD_PROC = command_processor/command_processor.c command_processor/split_argumen
 IN_PROC = input_processor/input_processor.c input_processor/prompt.c input_processor/env.c
 UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/processes.c utils/prompt_utils.c \
 		utils/spl_args_utils.c utils/arguments.c utils/valid.c utils/arguments.c utils/sequence_list.c utils/arguments.c utils/sequence_utils.c \
-		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/tty_ctl.c utils/expand.c utils/parsing.c utils/quotes.c utils/quote_utils.c
+		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/tty_ctl.c utils/expand.c utils/parsing.c utils/quotes.c utils/quote_utils.c \
+		utils/clean_up.c
 BUILTINS = builtins/cdpwd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/exp.c builtins/unset.c
 EXPAND = expand/expand_list.c expand/expand.c expand/parsing.c expand/utils.c
 

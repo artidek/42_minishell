@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:42:18 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 14:39:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:33:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ static void	s_q_inner(char *arg, int *j, int *i, t_expand **exp)
 	str = NULL;
 	while (arg[a])
 	{
-		if (arg[a] != '$' && arg[a] != '\'')
+		if (arg[a] != '$' && arg[a] != '\'' && arg[a] != ' ')
 			add_to_str(&str, 1, arg + a);
 		if (arg[a] == ' ' || arg[a] == '$' || arg[a] == '\'')
 		{
+			*j += 1;
+			*i += 1;
 			update_expand(exp, &str, 1);
 			return;
 		}
@@ -53,6 +55,7 @@ void	s_q_expand(char *arg, t_expand **exp, int *i)
 			s_q_inner(arg + j, &j, i, exp);
 	}
 	*i += 1;
+	update_expand(exp, &str, 0);
 }
 
 void	join_expanded(char **arg, t_expand *exp)
