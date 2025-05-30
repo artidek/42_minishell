@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:42:18 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 13:33:51 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:43:57 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	s_q_expand(char *arg, t_expand **exp, int *i)
 		if (arg[j] && arg[j] == '$')
 			s_q_inner(arg + j, &j, i, exp);
 	}
-	*i += 1;
+	if (arg[j])
+		*i += 1;
 	update_expand(exp, &str, 0);
 }
 

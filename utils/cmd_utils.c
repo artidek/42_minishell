@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 15:34:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 23:30:20 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	init_path(t_seq **sequence, char **paths)
 	int	i;
 
 	i = 0;
-	while ((*sequence)->commands->argv[0][i])
+	while ((*sequence)->commands->argv[i] && (*sequence)->commands->argv[0][i])
 	{
 		if ((*sequence)->commands->argv[0][i] == '/')
 		{
@@ -49,7 +49,7 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
 	if (!check_valid((*sequence)->commands->argv))
 		return (0);
-	if (!check_unclosed(&(*sequence)->commands->argv))
+	if (!check_valid((*sequence)->commands->argv))
 		return (0);
 	argv = (*sequence)->commands->argv;
 	while (argv[i])
@@ -58,6 +58,8 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 		i++;
 	}
 	clean_up_arg(&(*sequence)->commands->argv);
+	if (!(*sequence)->commands->argv[0])
+		return (0);
 	return (1);
 }
 

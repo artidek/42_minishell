@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:48:42 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 09:59:26 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:51:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ static void	get_val(t_expand **exp, t_main_dat *main_data)
 		{
 			free((*exp)->exp_str);
 			(*exp)->exp_str = ft_strdup(env_tmp->value);
+			return;
 		}
 		env_tmp = env_tmp->next;
 	}
+	free ((*exp)->exp_str);
+	(*exp)->exp_str = malloc(sizeof(char));
+	(*exp)->exp_str[0] = 0;
 }
 
 void	expand(t_expand **exp, t_main_dat *main_data)

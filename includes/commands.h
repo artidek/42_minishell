@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:20:44 by svolkau           #+#    #+#             */
-/*   Updated: 2025/05/24 20:08:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:19:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void				delone(t_shenv **en, char *key);
 t_shenv				*initshellenv(t_shenv *en, char **env);
 void				freeenv(t_shenv *en);
 int					getposeql(char *str);
+void				addback(t_shenv **en, t_shenv *new);
+t_shenv				*new (char *key, char *value, int export);
 
 #endif
