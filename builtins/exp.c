@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:29:32 by svolkau           #+#    #+#             */
-/*   Updated: 2025/05/24 20:23:33 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 17:48:38 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ void	printexport(t_shenv *en)
 		while(head)
     	{
 			if (head->key[0] == b[i])
-        		ft_printf("declare -x %s=\"%s\"\n", head->key, head->value);
+			{
+				if (head->value == NULL)
+        			ft_printf("declare -x %s\n", head->key);
+				else
+					ft_printf("declare -x %s=\"%s\"\n", head->key, head->value);
+			}
         	head = head->next;
     	}
 		i++;
@@ -68,17 +73,76 @@ int checkcharackters(char *str)
 	return(0);
 }
 
-int ft_export(t_main_dat *main_data, char **gv)
+void	findadd(t_shenv *en, char *key, char *value)
+{
+    while (en)
+	{
+		if ((ft_strncmp(en->key, key, ft_strlen(key)) == 0)
+		&& (ft_strlen(en->key) == ft_strlen(key)))
+		{
+			if (value != NULL)
+			{
+				free(en->value);
+				en->value = value;
+				en->export = 0;
+				free(key);
+			}
+			else
+				free(key);
+			break;
+		}
+		en = en->next;
+	}
+}
+
+void addtoenv(t_shenv *en, char *key, char *value)
+{
+	if (findkey(en, key) == 1)
+	{
+		if (value == NULL)
+			addback(&en, new(key, value, 1));
+		else
+			addback(&en, new(key, value, 0));
+	}
+	else
+		findadd(en, key, value);
+}
+
+int	exporteachvar(t_shenv *en, char **gv)
 {
 	int i;
+	char *key;
+    char *value;
 	int pos;
+	
+	i = 1;
+    while(gv[i])
+    {
+		pos = getposeql(gv[i]);
+		if ((checkcharackters(gv[i]) == 1) || pos == 0)
+		{
+			ft_printf("minishell: export: ‘%s’: not a valid identifier\n", gv[i]);
+			return(1);
+		}
+		key = ft_substr(gv[i], 0, pos);
+		if (pos == (int)ft_strlen(gv[i]))
+			value = NULL;
+		else
+			value = ft_substr(gv[i], pos + 1, ft_strlen(gv[i]) - pos - 1);
+		addtoenv(en, key, value);
+		i++;
+    }
+	return(0);
+}
+
+int ft_export(t_main_dat *main_data, char **gv)
+{
 	t_shenv *en;
-	//char *key;
-    //char *value;
+	
 	en = main_data->env_cp;
 	if ((arr_len(gv) == 1) && (ft_strncmp(gv[0], "export", ft_strlen(gv[0])) != 0))
 	{
-		printf("‘%s’: command not found\n", gv[0]);
+		ft_printf("‘%s’: command not found\n", gv[0]);
 		return (1);
 	}
 	if ((arr_len(gv) == 1) && (ft_strncmp(gv[0], "export", ft_strlen(gv[0])) == 0))
@@ -86,40 +150,5 @@ int ft_export(t_main_dat *main_data, char **gv)
 		printexport(en);
 		return (0);
 	}
-	i = 0;
-    while(gv[i])
-    {
-		pos = getposeql(gv[i]);
-		if ((checkcharackters(gv[i]) == 1) || pos == 0)
-		{
-			printf("minishell: export: ‘%s’: not a valid identifier\n", gv[i]);
-			return(1);
-		}
-      /*   key = ft_substr(gv[i], 0, pos);
-		if (findkey == 1)
-		{
-			free()
-		}
-        value = ft_substr(gv[i], pos + 1, ft_strlen(gv[i]) - pos - 1);
-        addback(&en, new(key, value)); */
-        i++;
-    }
-	return(0);
+	return(exporteachvar(en, gv));
 }
-
-// int main(int gc, char **gv, char **env)
-// {
-//     (void)gc;
-//     (void)gv;
-// 	char *gv1[2];
-//     t_shenv *en = NULL;
-
-// 	gv1[0] = "env";
-// 	gv1[1] = NULL;
-//     en = initshellenv(en, env);
-// 	char *gv2[3];
-// 	gv2[0] = "export";
-// 	gv2[1] = "11";
-// 	gv2[2] = NULL;
-// 	ft_export(en, gv2);
-// }

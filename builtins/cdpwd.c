@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cdpwd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:20:15 by svolkau           #+#    #+#             */
-/*   Updated: 2025/05/24 17:39:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/26 18:09:22 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,3 @@ int	ft_cd(t_main_dat *main_data, char **gv)
 	setpwd(en, mygetcwd(), "PWD");
 	return(0);
 }
-
-/* int main(int gc, char **gv, char **env)
-{
-	(void)gc;
-    (void)gv;
-	char *gv1[3];
-	t_shenv *en = NULL;
-
-	en = initshellenv(en, env);
-	gv1[0] = "cd";
-	gv1[1] = "..";
-	gv1[2] = NULL;
-	ft_cd(en, gv1);
-	char *gv2[2];
-	gv2[0] = "env";
-	gv2[1] = NULL;
-    ft_env(en, gv2);
-	freeenv(en);
-} */
