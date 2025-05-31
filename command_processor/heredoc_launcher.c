@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:05:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 14:39:28 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 00:39:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	heredoc_warning(t_main_dat *main_data, char *eof)
 	fd = open("heredoc", O_RDWR | O_CREAT | O_APPEND, 0644);
 	ft_memset(line, 0, 2);
 	r_line = read(fd, line, 1);
+	main_data->line_counter += 1;
 	while (r_line > 0)
 	{
 		if (line[0] && line[0] == '\n')

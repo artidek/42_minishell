@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/24 23:52:03 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 00:41:34 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	run_input_processor(t_main_dat *main_data)
 			write(1, "exit\n", 5);
 			return (0);
 		}
+		main_data->line_counter += 1;
 		run_command_processor(main_data);
 		if (main_data->input_data.input)
 			free(main_data->input_data.input);

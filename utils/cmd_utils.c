@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 23:30:20 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 01:16:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 	(*sequence)->commands->argv = split_arguments((*sequence)->temp_cmd);
 	if (!check_valid((*sequence)->commands->argv))
 		return (0);
-	if (!check_valid((*sequence)->commands->argv))
-		return (0);
 	argv = (*sequence)->commands->argv;
 	while (argv[i])
 	{
@@ -88,10 +86,7 @@ int	fill_commands(t_main_dat *main_data, char **paths)
 		if (!init_args(main_data, &temp))
 			return (0);
 		if (temp->commands->argv && !init_path(&temp, paths))
-		{
-			perror("minishell");
 			return (0);
-		}
 		temp = temp->next;
 	}
 	return (1);
