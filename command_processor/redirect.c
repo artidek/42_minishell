@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:28:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 21:12:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:47:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	extract_redir(t_seq **seq, char *str)
 	}
 }
 
-void	fill_redir (t_main_dat *main_data)
+int	fill_redir (t_main_dat *main_data)
 {
 	t_seq *sequence;
 
@@ -85,4 +85,14 @@ void	fill_redir (t_main_dat *main_data)
 			extract_redir(&sequence, sequence->temp_redir);
 		sequence = sequence->next;
 	}
+	sequence = main_data->sequence;
+	while (sequence)
+	{
+		if (!launch_heredocs(sequence, main_data))
+			return (0);
+		sequence = sequence->next;
+	}
+	if (access("heredoc", R_OK) != -1)
+			redir_in("heredoc");
+	return (1);
 }

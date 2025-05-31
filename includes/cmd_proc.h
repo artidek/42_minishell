@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 00:36:13 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:17:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ typedef struct s_seq
 }					t_seq;
 
 int					is_redir(char delim, char *args);
-int					launch_redir(t_seq *sequence);
 int					process_failed(pid_t pid);
 int					create_pipe(int *pipefd);
-int					heredoc(char *eof);
 int					check_exist(char *path);
 int					redir_in(char *file);
 int					stop_quotes(char quote, char *input);

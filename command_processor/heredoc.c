@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:04:55 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 12:58:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:30:49 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static	void start_heredoc(char *eof, int fd)
 			write(fd, line, ft_strlen(line));
 		}
 		if (!line)
-			return;
+			exit(2);
 		if (ft_strncmp(eof, line, ft_strlen(line)) == 0 && (ft_strlen(eof) == ft_strlen(line)))
 		{
 			free(line);
@@ -43,13 +43,16 @@ static	void start_heredoc(char *eof, int fd)
 		free(line);
 	}
 }
+
 int	heredoc(char *eof)
 {
 	int	fd;
 	int	pid;
+	int	status;
 	struct sigaction	sa_orig;
 
 	sig_ignore(&sa_orig);
+	unlink("heredoc");
 	fd = open("heredoc", O_RDWR | O_CREAT | O_APPEND, 0644);
 	pid = fork();
 	if (process_failed(pid))
@@ -60,8 +63,11 @@ int	heredoc(char *eof)
 		close(fd);
 		exit(0);
 	}
-	waitpid(pid, NULL, 0);
-	close(fd);
+	waitpid(pid, &status, 0);
+	if(WEXITSTATUS(status) == 1)
+		return (fd);
+	if (WEXITSTATUS(status) == 2)
+		return (2);
 	sig_restore(&sa_orig);
 	return (1);
 }

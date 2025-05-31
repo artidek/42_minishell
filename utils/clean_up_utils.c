@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 00:24:29 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 00:59:03 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 11:39:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**nw_argv(t_args *new_args)
 		len++;
 		temp = temp->next;
 	}
-	new_arg = malloc(sizeof(char *) * (len + 1));
+	new_arg = malloc(sizeof(char *) * (len + 2));
 	temp = new_args;
 	while (temp)
 	{

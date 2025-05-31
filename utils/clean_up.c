@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 01:08:02 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 11:49:22 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ static char	**rebuild_arg(char **arg)
 	new_args = NULL;
 	while (arg[i])
 	{
-		if (arg[i])
-			add_node_a(&new_args, create_node_a(ft_strdup(*arg)));
+		if (arg[i] && arg[i][0])
+			add_node_a(&new_args, create_node_a(ft_strdup(arg[i])));
 		i++;
 	}
-	free_arr(arg);
 	return (nw_argv(new_args));
 }
 
@@ -98,6 +97,7 @@ void	clean_up_arg(char ***arg)
 	int	i;
 
 	i = 0;
+	int j = 0;
 	if (**arg && ft_strncmp((*arg)[i], "echo", ft_strlen((*arg)[i])) == 0
 		&& ft_strncmp((*arg)[i], "echo", ft_strlen("echo")) == 0)
 	{
@@ -114,6 +114,11 @@ void	clean_up_arg(char ***arg)
 			full_clean(&(*arg)[i]);
 			i++;
 		}
+	}
+	while ((*arg)[j])
+	{
+		printf("arg %s\n", (*arg)[j]);
+		j++;
 	}
 	*arg = rebuild_arg(*arg);
 }

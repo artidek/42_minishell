@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_launcher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 12:56:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:48:06 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,10 @@ static int	start_redir(t_redir *redir)
 int	launch_redir(t_seq *sequence)
 {
 	t_redir	*redir;
-	t_redir *temp;
 
 	redir = sequence->redirect;
-	temp = redir;
 	if (!redir)
 		return (1);
-	while (temp)
-	{
-		if (temp->redir_type == HEREDOC)
-			heredoc(temp->file);
-		temp = temp->next;
-	}
-	if (access("heredoc", R_OK) != -1)
-			redir_in("heredoc");
 	while (redir)
 	{
 		if (redir->redir_type != HEREDOC)
