@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 00:55:29 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:52:16 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,8 @@ void	clean_up_arg(char ***arg)
 	if (**arg && ft_strncmp((*arg)[i], "echo", ft_strlen((*arg)[i])) == 0
 		&& ft_strncmp((*arg)[i], "echo", ft_strlen("echo")) == 0)
 	{
-		while ((*arg)[i])
-		{
-			o_q_s_rem(&(*arg)[i]);
-			i++;
-		}
+		*arg = rebuild_arg(*arg);
+		return;
 	}
 	else
 	{

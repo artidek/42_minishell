@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:33:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 01:16:07 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:23:22 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_path(char *cmd, char **paths)
 		path = NULL;
 		i++;
 	}
-	if (errno != 2)
-		ft_printf("%d: command not found\n");
+	if (errno == 2)
+		ft_printf("%s: command not found\n", cmd);
 	return (path);
 }

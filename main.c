@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:48:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 14:10:34 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 12:44:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	main_data.exit_code = 0;
 	main_data.env_cp = NULL;
 	main_data.env_cp = initshellenv(main_data.env_cp, envp);
+	main_data.vars = NULL;
 	init_builtins(&main_data);
 	(void)argv;
 	if (argc > 1)

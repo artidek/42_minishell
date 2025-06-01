@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 13:37:28 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 00:41:34 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:06:46 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	run_input_processor(t_main_dat *main_data)
 			free(main_data->input_data.prompt);
 			free(main_data->input_data.input);
 			freeenv(main_data->env_cp);
+			if (main_data->vars)
+				ft_lstclear(&main_data->vars, del);
 			write(1, "exit\n", 5);
 			return (0);
 		}

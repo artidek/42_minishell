@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 14:18:24 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:31:38 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_main_dat
 	int				exit_code;
 	int				pipe;
 	int				(*func_ptr[7])(struct s_main_dat *, char **);
+	t_list			*vars;
 	t_shenv			*env_cp;
 	t_input_data	input_data;
 	t_seq			*sequence;
@@ -50,6 +51,7 @@ int					launch_redir(t_seq *sequence);
 int					heredoc(char *eof);
 int					fill_redir(t_main_dat *main_data);
 int					launch_heredocs(t_seq *seq, t_main_dat *main_data);
+int					is_var(char **argv, t_main_dat *main_data);
 void				clear_command_proc(t_main_dat *main_data);
 void				run_command_processor(t_main_dat *main_data);
 void				free_arr(char **arr);
@@ -64,6 +66,8 @@ void				check_double_quote(char **arg, t_main_dat *main_data);
 void				check_single_quote(char **arg, t_main_dat *main_data);
 void				expand(t_expand **exp, t_main_dat *main_data);
 void				expandable(char **arg, t_main_dat *main_data);
+void				clear_all(t_main_dat *main_data);
+void				del(void *var);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

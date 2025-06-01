@@ -6,11 +6,21 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 01:16:18 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:36:17 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static char	*no_path_arg(char *arg, char **paths)
+{
+	char	*res;
+	
+	res = NULL;
+	if (built_in(arg) < 0)
+		res = find_path(arg,paths);
+	return (res);
+}
 
 static int	init_path(t_seq **sequence, char **paths)
 {
@@ -22,7 +32,10 @@ static int	init_path(t_seq **sequence, char **paths)
 		if ((*sequence)->commands->argv[0][i] == '/')
 		{
 			if (!check_exist((*sequence)->commands->argv[0]))
+			{
+				ft_printf("%s\n: command not found\n", (*sequence)->commands->argv[0]);
 				return (0);
+			}
 			else
 			{
 				(*sequence)->commands->path = ft_strdup((*sequence)->commands->argv[0]);
@@ -31,11 +44,8 @@ static int	init_path(t_seq **sequence, char **paths)
 		}
 		i++;
 	}
-	if (built_in((*sequence)->commands->argv[0]) < 0)
-		(*sequence)->commands->path = find_path((*sequence)->commands->argv[0],
-				paths);
-	if (!(*sequence)->commands->path
-		&& built_in((*sequence)->commands->argv[0]) < 0)
+	(*sequence)->commands->path = no_path_arg((*sequence)->commands->argv[0], paths);
+	if (!(*sequence)->commands->path && built_in((*sequence)->commands->argv[0]) < 0)
 		return (0);
 	return (1);
 }
@@ -52,6 +62,8 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 	argv = (*sequence)->commands->argv;
 	while (argv[i])
 	{
+		if (i == 0 && is_var((*sequence)->commands->argv, main_dat))
+			return (0);
 		expandable(&(*sequence)->commands->argv[i], main_dat);
 		i++;
 	}
@@ -60,7 +72,6 @@ static int	init_args(t_main_dat *main_dat, t_seq **sequence)
 		return (0);
 	return (1);
 }
-
 static int	seq_size(t_seq *sequence)
 {
 	int	i;

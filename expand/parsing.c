@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 16:01:07 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:31:56 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,19 @@ static void	no_quote(char **arg, t_expand **exp)
 	while ((*arg)[i])
 	{
 		if ((*arg)[i] == '$')
+		{
+			if (str)
+				update_expand(exp, &str, 0);
 			n_q_inner(&(*arg)[i], &i, exp);
+		}
 		if ((*arg)[i] && (*arg)[i] != '$')
 		{
 			add_to_str(&str, 1, &(*arg)[i]);
 			i++;
 		}
 	}
-	update_expand(exp, &str, 0);
+	if (str)
+		update_expand(exp, &str, 0);
 }
 
 static void	double_quote(char **arg, t_expand **exp)
