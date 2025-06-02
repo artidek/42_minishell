@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 17:31:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:35:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef struct s_main_dat
 	int				line_counter;
 	int				stdin_cp;
 	int				stdout_cp;
-	int				exit_code;
 	int				pipe;
 	int				(*func_ptr[7])(struct s_main_dat *, char **);
 	t_list			*vars;
@@ -60,7 +59,6 @@ void				sig_ignore(struct sigaction *sa_orig);
 void				sig_restore(struct sigaction *sa_orig);
 void				restore_sys_files(int stdin_cp, int stdout_cp);
 void				single_command(t_main_dat *main_data);
-void				expandable(char **arg, t_main_dat *main_data);
 void				start_piping(t_main_dat *main_data);
 void				check_double_quote(char **arg, t_main_dat *main_data);
 void				check_single_quote(char **arg, t_main_dat *main_data);
@@ -68,6 +66,8 @@ void				expand(t_expand **exp, t_main_dat *main_data);
 void				expandable(char **arg, t_main_dat *main_data);
 void				clear_all(t_main_dat *main_data);
 void				del(void *var);
+void				handle_exit(int status, struct sigaction sa_orig,
+						t_main_dat *main_data);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

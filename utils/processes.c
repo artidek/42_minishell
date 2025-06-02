@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:05:07 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 10:54:19 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:56:08 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	sig_ignore(struct sigaction *sa_orig)
 
 void	sig_restore(struct sigaction *sa_orig)
 {
+	printf("sigaction request\n");
 	sigaction(SIGINT, sa_orig, NULL);
 }
 

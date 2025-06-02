@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 11:02:31 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 14:54:08 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static void	run_command(t_main_dat *main_data)
-{
-	signal(SIGINT, SIG_DFL);
-	disable_echoctl();
-	execve(main_data->sequence->commands->path,
-		main_data->sequence->commands->argv, NULL);
-}
 
 int	is_builtin(t_main_dat *main_data, t_seq *seq)
 {
@@ -37,33 +29,38 @@ int	is_builtin(t_main_dat *main_data, t_seq *seq)
 	return (0);
 }
 
+static void	run_command(t_main_dat *main_data)
+{
+	signal(SIGINT, handle_sint);
+	signal(SIGQUIT, handle_sqt);
+	disable_echoctl();
+	if (main_data->sequence->commands->argv && !is_builtin(main_data, main_data->sequence))
+		execve(main_data->sequence->commands->path,
+		main_data->sequence->commands->argv, NULL);
+}
+
 void	single_command(t_main_dat *main_data)
 {
 	int					pid;
 	int					status;
 	struct sigaction	sa_orig;
 
+	status = 0;
 	sig_ignore(&sa_orig);
 	if (!launch_redir(main_data->sequence))
 	{
 		clear_command_proc(main_data);
 		return ;
 	}
-	if (main_data->sequence->commands->argv && !is_builtin(main_data, main_data->sequence))
+	pid = fork();
+	if (process_failed(pid))
 	{
-		pid = fork();
-		if (process_failed(pid))
-		{
-			clear_command_proc(main_data);
-			return ;
-		}
-		if (pid == 0)
-			run_command(main_data);
-		waitpid(pid, &status, 0);
-		if (WEXITSTATUS(status) > 0)
-			perror("minishell");
+		clear_command_proc(main_data);
+		return ;
 	}
-	enable_echoctl();
-	sig_restore(&sa_orig);
+	if (pid == 0)
+		run_command(main_data);
+	waitpid(pid, &status, 0);
+	handle_exit(status, sa_orig, main_data);
 	clear_command_proc(main_data);
 }

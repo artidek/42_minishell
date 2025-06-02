@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:48:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 12:44:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:47:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+static t_list	*init_vars()
+{
+	char	*str;
+	char	*num_to_str;
+	t_list	*first_entry;
+
+	str = NULL;
+	num_to_str = ft_itoa(0);
+	add_to_str(&str, ft_strlen("?="), "?=");
+	add_to_str(&str, ft_strlen(num_to_str), num_to_str);
+	free(num_to_str);
+	first_entry = ft_lstnew(ft_strdup(str));
+	free(str);
+	return (first_entry);
+}
 
 static void	init_builtins(t_main_dat *main_data)
 {
@@ -46,10 +62,9 @@ int	main(int argc, char **argv, char **envp)
 	main_data.pipe = 0;
 	main_data.input_data.input = NULL;
 	main_data.input_data.prompt = NULL;
-	main_data.exit_code = 0;
 	main_data.env_cp = NULL;
 	main_data.env_cp = initshellenv(main_data.env_cp, envp);
-	main_data.vars = NULL;
+	main_data.vars = init_vars();
 	init_builtins(&main_data);
 	(void)argv;
 	if (argc > 1)

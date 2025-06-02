@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 23:28:42 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:24:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,24 @@ void	extract_outer_string(char **res, char *arg, int *i, t_args **args)
 	j = 0;
 	while (arg[j])
 	{
-		if (*res && (arg[j] == '\"' || arg[j] == '\'' || arg[j] == ' '))
+		if (arg[j] == '\"' || arg[j] == '\'' || arg[j] == ' ')
 		{
-			add_node_a(args, create_node_a(ft_strdup(*res)));
-			free(*res);
-			*res = NULL;
+			if (*res)
+			{
+				add_node_a(args, create_node_a(ft_strdup(*res)));
+				free(*res);
+				*res = NULL;
+			}
+			if (!*res && arg[j] == ' ')
+				*i += 1;
 			return ;
 		}
-		add_to_str(res, 1, &arg[j]);
-		j++;
-		*i += 1;
+		if (arg[j] != '\'' && arg[j] != '\"')
+		{
+			add_to_str(res, 1, &arg[j]);
+			j++;
+			*i += 1;
+		}
 	}
 }
 

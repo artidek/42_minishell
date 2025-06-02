@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_ms.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:38:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 11:39:53 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 12:44:19 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	wait_and_exit(struct sigaction sa_orig, t_main_dat *main_data)
+{
+	int	status;
+
+	while(wait(&status) > 0);
+	handle_exit(status, sa_orig, main_data);
+	clear_command_proc(main_data);
+}
 
 static void	exec_command(t_seq *seq, int prev_pipe, int *pipefd)
 {
@@ -77,8 +86,5 @@ void	start_piping(t_main_dat *main_data)
 		prev_pipe = pipefd[0];
 		seq = seq->next;
 	}
-	while(wait(NULL) > 0);
-	enable_echoctl();
-	sig_restore(&sa_orig);
-	clear_command_proc(main_data);
+	wait_and_exit(sa_orig, main_data);
 }
