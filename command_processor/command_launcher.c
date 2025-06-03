@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 14:20:55 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:37:03 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,24 @@ static int	g_sig = 0;
 
 void	wait_and_clear(t_main_dat *main_data)
 {
-	while(wait(NULL) > 0);
+	t_seq	*seq;
+	int	status;
+
+	seq = main_data->sequence;
+	while (seq)
+	{
+		waitpid(seq->pid, &status, 0);
+		seq = seq->next;
+	}
+	WEXITSTATUS(status);
 	enable_echoctl();
 	clear_command_proc(main_data);
 	if (g_sig > 0)
 		handle_exit(main_data, g_sig);
-	else
+	else if (status > 0)
 		handle_exit(main_data, 2);
+	else
+		handle_exit(main_data, 0);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -86,6 +97,7 @@ void	single_command(t_main_dat *main_data)
 		}
 		if (pid == 0)
 			run_command(main_data);
+		main_data->sequence->pid = pid;
 		wait_and_clear(main_data);
 	}
 }

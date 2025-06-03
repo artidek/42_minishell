@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 13:17:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:27:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_redir
 
 typedef struct s_seq
 {
+	int				pid;
 	char			*temp_redir;
 	char			*temp_cmd;
 	t_redir			*redirect;

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:38:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 14:34:25 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:34:42 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ static void	exec_command(t_seq *seq, int prev_pipe, int *pipefd)
 
 static void	start_process(t_seq *seq, int *pipefd, int prev_pipe, t_main_dat *main_data)
 {
+	int	pid;
+
 	disable_echoctl();
-	if (fork() == 0)
+	pid = fork();
+	if (pid == 0)
 	{
 		if (built_in(seq->commands->argv[0]) != -1)
 		{
@@ -54,6 +57,7 @@ static void	start_process(t_seq *seq, int *pipefd, int prev_pipe, t_main_dat *ma
 		}
 		exec_command(seq, prev_pipe, pipefd);
 	}
+	seq->pid = pid;
 }
 
 void	start_piping(t_main_dat *main_data)

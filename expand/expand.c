@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:48:42 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 18:44:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:06:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	get_var(t_expand **exp, t_main_dat *main_data)
 				eq_split[0], ft_strlen(eq_split[0])) == 0)
 		{
 			free((*exp)->exp_str);
+			free_arr(eq_split);
 			(*exp)->exp_str = var_val(env_tmp->content);
 			return;
 		}

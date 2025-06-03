@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 21:57:18 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:02:04 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static char	**rebuild_arg(char **arg)
 			add_node_a(&new_args, create_node_a(ft_strdup(arg[i])));
 		i++;
 	}
+	free_arr(arg);
 	return (nw_argv(new_args));
 }
 
@@ -115,5 +116,6 @@ void	clean_up_arg(char ***arg)
 			i++;
 		}
 	}
+	free(trimmed);
 	*arg = rebuild_arg(*arg);
 }
