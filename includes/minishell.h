@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:35:27 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:11:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void				sig_ignore(struct sigaction *sa_orig);
 void				sig_restore(struct sigaction *sa_orig);
 void				restore_sys_files(int stdin_cp, int stdout_cp);
 void				single_command(t_main_dat *main_data);
+void				expandable(char **arg, t_main_dat *main_data);
 void				start_piping(t_main_dat *main_data);
 void				check_double_quote(char **arg, t_main_dat *main_data);
 void				check_single_quote(char **arg, t_main_dat *main_data);
@@ -66,8 +67,11 @@ void				expand(t_expand **exp, t_main_dat *main_data);
 void				expandable(char **arg, t_main_dat *main_data);
 void				clear_all(t_main_dat *main_data);
 void				del(void *var);
-void				handle_exit(int status, struct sigaction sa_orig,
-						t_main_dat *main_data);
+void				sighandler(int sig);
+void				wait_and_clear(t_main_dat *main_data);
+void				handle_exit(t_main_dat *main_data, int status);
+void				sigint_handler(int sig);
+void				sigquit_handler(int sig);
 char				*build_str(char **str1, char **str2, char *str3);
 char				**get_pwd(void);
 

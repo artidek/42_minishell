@@ -3,14 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   command_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 14:54:08 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:20:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	g_sig = 0;
+
+void	wait_and_clear(t_main_dat *main_data)
+{
+	while(wait(NULL) > 0);
+	enable_echoctl();
+	clear_command_proc(main_data);
+	if (g_sig > 0)
+		handle_exit(main_data, g_sig);
+	else
+		handle_exit(main_data, 2);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sighandler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1,"^C\n", 3);
+		g_sig = 130;
+	}
+	if(sig == SIGQUIT)
+	{
+		write(1, "^\\Quit (core dumped)\n", 22);
+		g_sig = 131;
+	}
+}
+
+static void	run_command(t_main_dat *main_data)
+{
+	disable_echoctl();
+	execve(main_data->sequence->commands->path,
+		main_data->sequence->commands->argv, NULL);
+}
 
 int	is_builtin(t_main_dat *main_data, t_seq *seq)
 {
@@ -29,38 +65,27 @@ int	is_builtin(t_main_dat *main_data, t_seq *seq)
 	return (0);
 }
 
-static void	run_command(t_main_dat *main_data)
-{
-	signal(SIGINT, handle_sint);
-	signal(SIGQUIT, handle_sqt);
-	disable_echoctl();
-	if (main_data->sequence->commands->argv && !is_builtin(main_data, main_data->sequence))
-		execve(main_data->sequence->commands->path,
-		main_data->sequence->commands->argv, NULL);
-}
-
 void	single_command(t_main_dat *main_data)
 {
 	int					pid;
-	int					status;
-	struct sigaction	sa_orig;
 
-	status = 0;
-	sig_ignore(&sa_orig);
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, sighandler);
 	if (!launch_redir(main_data->sequence))
 	{
 		clear_command_proc(main_data);
 		return ;
 	}
-	pid = fork();
-	if (process_failed(pid))
+	if (main_data->sequence->commands->argv && !is_builtin(main_data, main_data->sequence))
 	{
-		clear_command_proc(main_data);
-		return ;
+		pid = fork();
+		if (process_failed(pid))
+		{
+			clear_command_proc(main_data);
+			return ;
+		}
+		if (pid == 0)
+			run_command(main_data);
+		wait_and_clear(main_data);
 	}
-	if (pid == 0)
-		run_command(main_data);
-	waitpid(pid, &status, 0);
-	handle_exit(status, sa_orig, main_data);
-	clear_command_proc(main_data);
 }

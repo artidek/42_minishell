@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:48:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:47:27 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:12:59 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("Program doesn't accept arguments\n");
 		return (1);
 	}
-	seg_init(SIGINT, sigint_handler);
-	seg_init(SIGQUIT, sigquit_handler);
 	run_input_processor(&main_data);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_proc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 09:44:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:35:51 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:50:48 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ void				update_expand(t_expand **exp, char **str, int ex);
 void				join_expanded(char **arg, t_expand *exp);
 void				seg_init(int signal, void(sig_handler)(int));
 void				s_q_expand(char *arg, t_expand **exp, int *i);
-void				get_exp_val(char **str, int *i, t_expand **exp, char *arg);
-void				n_q_inner(char *arg, int *i, t_expand **exp);
 t_expand			*new_expand(char *exp_str, int exp);
 
 #endif

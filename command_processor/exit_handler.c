@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 11:51:40 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 12:46:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:58:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ static t_list	*find_last_entry(t_list *vars)
 	return (vars);
 }
 
-void	handle_exit(int status, struct sigaction sa_orig, t_main_dat *main_data)
+void	handle_exit(t_main_dat *main_data, int status)
 {
-	int	st;
 	char *num_to_str;
 	char	*new_entry;
 	t_list *lst_entry;
 
-	st = WEXITSTATUS(status);
-	num_to_str = ft_itoa(st);
+	num_to_str = ft_itoa(status);
 	new_entry = NULL;
 	lst_entry = find_last_entry(main_data->vars);
 	add_to_str(&new_entry, ft_strlen("?="), "?=");
@@ -43,8 +41,5 @@ void	handle_exit(int status, struct sigaction sa_orig, t_main_dat *main_data)
 	free(lst_entry->content);
 	lst_entry->content = ft_strdup(new_entry);
 	free(new_entry);
-	printf("exit_code %s\n", num_to_str);
 	free(num_to_str);
-	enable_echoctl();
-	sig_restore(&sa_orig);
 }

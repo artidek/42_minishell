@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 19:52:16 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:57:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,16 @@ static void	full_clean(char **arg)
 void	clean_up_arg(char ***arg)
 {
 	int	i;
+	char	*trimmed;
 
 	i = 0;
-	if (**arg && ft_strncmp((*arg)[i], "echo", ft_strlen((*arg)[i])) == 0
-		&& ft_strncmp((*arg)[i], "echo", ft_strlen("echo")) == 0)
+	trimmed = ft_strtrim(*arg[0], " ");
+	free(*arg[0]);
+	*arg[0] = ft_strdup(trimmed);
+	if (**arg && ft_strncmp(trimmed, "echo", ft_strlen(trimmed)) == 0 && ft_strncmp(trimmed, "echo", ft_strlen("echo")) == 0)
 	{
 		*arg = rebuild_arg(*arg);
+		free(trimmed);
 		return;
 	}
 	else

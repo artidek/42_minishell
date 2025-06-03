@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:06:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 16:04:24 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/02 22:03:24 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@ static void	double_quote_string(char **res, char *arg, int * i)
 
 static void	extract_inner_str(char **res, char *arg , int *i)
 {
-	if (*arg == '\"')
+	if (*arg == 34)
 	{
 		double_quote_string(res, arg, i);
 	}
-	else if (*arg == '\'')
+	else
 		single_quote_string(res, arg, i);
 }
 
 static void	extract_arg(char *arg, char **res, t_args **args)
 {
 	int	i;
-
+	
 	i = 0;
 	while (arg[i])
 	{

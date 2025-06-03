@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 16:24:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:55:11 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,21 @@ void	extract_outer_string(char **res, char *arg, int *i, t_args **args)
 	j = 0;
 	while (arg[j])
 	{
-		if (arg[j] == '\"' || arg[j] == '\'' || arg[j] == ' ')
+		if (!*res && (arg[j] == '\"' || arg[j] == '\''))
+			return;
+		if (*res && (arg[j] == '\"' || arg[j] == '\''))
 		{
-			if (*res)
-			{
-				add_node_a(args, create_node_a(ft_strdup(*res)));
-				free(*res);
-				*res = NULL;
-			}
-			if (!*res && arg[j] == ' ')
-				*i += 1;
+			update_args(res, args);
 			return ;
 		}
-		if (arg[j] != '\'' && arg[j] != '\"')
+		if (arg[j] != '\"' && arg[j] != '\'')
 		{
 			add_to_str(res, 1, &arg[j]);
-			j++;
-			*i += 1;
+			if (arg[j] == ' ')
+				update_args(res, args);
 		}
+		j++;
+		*i += 1;
 	}
 }
 
@@ -64,7 +61,7 @@ char	**create_argv(t_args **args)
 		size++;
 	}
 	temp = *args;
-	argv = (char **)malloc(sizeof(char *) * (size + 2));
+	argv = (char **)malloc(sizeof(char *) * (size + 1));
 	size = 0;
 	while (temp)
 	{

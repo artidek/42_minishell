@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 15:15:59 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:49:05 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ static void	no_quote(char **arg, t_expand **exp)
 	while ((*arg)[i])
 	{
 		if ((*arg)[i] == '$')
-			get_exp_val(&str, &i, exp, &(*arg)[i]);
+		{
+			if (str)
+				update_expand(exp, &str, 0);
+			n_q_inner(&(*arg)[i], &i, exp);
+		}
 		if ((*arg)[i] && (*arg)[i] != '$')
 		{
 			add_to_str(&str, 1, &(*arg)[i]);
@@ -80,15 +84,18 @@ static void	double_quote(char **arg, t_expand **exp)
 			s_q_expand(&(*arg)[i], exp, &i);
 		}
 		if ((*arg)[i] == '$')
-			get_exp_val(&str, &i, exp, &(*arg)[i]);
+		{
+			update_expand(exp, &str, 0);
+			n_q_inner(&(*arg)[i], &i, exp);
+		}
 		if ((*arg)[i] != '$')
 		{
 			add_to_str(&str, 1, (*arg) + i);
 			i++;
 		}
 	}
-	//if (str)
-	 //update_expand(exp, &str, 0);
+	if (str)
+	 update_expand(exp, &str, 0);
 	return;
 }
 
