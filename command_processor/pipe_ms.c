@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_ms.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:38:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 21:34:42 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:11:51 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void run_sig_handlers(void)
+static void	run_sig_handlers(void)
 {
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
@@ -33,7 +33,8 @@ static void	exec_command(t_seq *seq, int prev_pipe, int *pipefd)
 	exit(1);
 }
 
-static void	start_process(t_seq *seq, int *pipefd, int prev_pipe, t_main_dat *main_data)
+static void	start_process(t_seq *seq, int *pipefd, int prev_pipe,
+		t_main_dat *main_data)
 {
 	int	pid;
 
@@ -62,9 +63,9 @@ static void	start_process(t_seq *seq, int *pipefd, int prev_pipe, t_main_dat *ma
 
 void	start_piping(t_main_dat *main_data)
 {
-	int	prev_pipe;
-	int	pipefd[2];
-	t_seq *seq;
+	int		prev_pipe;
+	int		pipefd[2];
+	t_seq	*seq;
 
 	seq = main_data->sequence;
 	prev_pipe = STDIN_FILENO;
@@ -72,7 +73,7 @@ void	start_piping(t_main_dat *main_data)
 	while (seq)
 	{
 		if (seq->next && !create_pipe(pipefd))
-			return;
+			return ;
 		if (!launch_redir(seq))
 		{
 			clear_command_proc(main_data);

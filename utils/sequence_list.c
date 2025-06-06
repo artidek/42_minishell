@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:59:03 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/25 11:09:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:17:54 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	clear_sequence(t_seq **sequence)
 
 void	add_sequence(t_seq **sequence)
 {
-	t_seq *temp;
+	t_seq	*temp;
 
 	if (!(*sequence))
 	{

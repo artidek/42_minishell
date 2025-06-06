@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:06:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/02 22:03:24 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:58:17 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	single_quote_string(char **res, char *arg, int * i)
+static void	single_quote_string(char **res, char *arg, int *i)
 {
 	int	j;
 
@@ -22,8 +22,8 @@ static void	single_quote_string(char **res, char *arg, int * i)
 		if (arg[j] == '\'' && j > 0)
 		{
 			*i += 1;
-			add_to_str(res, 1 , &arg[j]);
-			return;
+			add_to_str(res, 1, &arg[j]);
+			return ;
 		}
 		if (arg[j])
 			add_to_str(res, 1, &arg[j]);
@@ -32,7 +32,7 @@ static void	single_quote_string(char **res, char *arg, int * i)
 	}
 }
 
-static void	double_quote_string(char **res, char *arg, int * i)
+static void	double_quote_string(char **res, char *arg, int *i)
 {
 	int	j;
 
@@ -42,8 +42,8 @@ static void	double_quote_string(char **res, char *arg, int * i)
 		if (arg[j] == '\"' && j > 0)
 		{
 			*i += 1;
-			add_to_str(res, 1 , &arg[j]);
-			return;
+			add_to_str(res, 1, &arg[j]);
+			return ;
 		}
 		if (arg[j])
 			add_to_str(res, 1, &arg[j]);
@@ -52,7 +52,7 @@ static void	double_quote_string(char **res, char *arg, int * i)
 	}
 }
 
-static void	extract_inner_str(char **res, char *arg , int *i)
+static void	extract_inner_str(char **res, char *arg, int *i)
 {
 	if (*arg == 34)
 	{
@@ -65,13 +65,13 @@ static void	extract_inner_str(char **res, char *arg , int *i)
 static void	extract_arg(char *arg, char **res, t_args **args)
 {
 	int	i;
-	
+
 	i = 0;
 	while (arg[i])
 	{
 		if (arg[i] == '\"' || arg[i] == '\'')
 		{
-			extract_inner_str(res,&arg[i], &i);
+			extract_inner_str(res, &arg[i], &i);
 			update_args(res, args);
 		}
 		if (*res && arg[i] && arg[i] == ' ')

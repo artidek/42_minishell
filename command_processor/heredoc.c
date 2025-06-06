@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:04:55 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 14:30:49 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:16:35 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static void	handle_sig(int signal)
 {
 	(void)signal;
 	write(STDOUT_FILENO, "\n", 1);
-	exit(1);
+	exit(254);
 }
 
-static	void start_heredoc(char *eof, int fd)
+static void	start_heredoc(char *eof, int fd)
 {
-	char *line;
+	char	*line;
 
-	seg_init(SIGINT,handle_sig);
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, sigquit_handler);
 	line = NULL;
+	rl_catch_signals = 0;
 	while (1)
 	{
 		line = readline(">");
@@ -35,23 +37,25 @@ static	void start_heredoc(char *eof, int fd)
 		}
 		if (!line)
 			exit(2);
-		if (ft_strncmp(eof, line, ft_strlen(line)) == 0 && (ft_strlen(eof) == ft_strlen(line)))
+		if (ft_strncmp(eof, line, ft_strlen(line)) == 0
+			&& (ft_strlen(eof) == ft_strlen(line)))
 		{
 			free(line);
-			return;
+			return ;
 		}
 		free(line);
 	}
 }
 
-int	heredoc(char *eof)
+int	heredoc(char *eof, int *status)
 {
-	int	fd;
-	int	pid;
-	int	status;
-	struct sigaction	sa_orig;
+	int				fd;
+	int				pid;
+	struct termios	orig_term;
 
-	sig_ignore(&sa_orig);
+	tcgetattr(STDIN_FILENO, &orig_term);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	unlink("heredoc");
 	fd = open("heredoc", O_RDWR | O_CREAT | O_APPEND, 0644);
 	pid = fork();
@@ -63,11 +67,11 @@ int	heredoc(char *eof)
 		close(fd);
 		exit(0);
 	}
-	waitpid(pid, &status, 0);
-	if(WEXITSTATUS(status) == 1)
+	waitpid(pid, status, 0);
+	tcsetattr(STDIN_FILENO, TCSANOW, &orig_term);
+	if (WEXITSTATUS(*status) == 254)
 		return (fd);
-	if (WEXITSTATUS(status) == 2)
+	if (WEXITSTATUS(*status) == 2)
 		return (2);
-	sig_restore(&sa_orig);
-	return (1);
+	return (fd);
 }

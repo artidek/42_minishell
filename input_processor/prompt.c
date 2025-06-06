@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 10:32:29 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/24 23:58:18 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:52:11 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_home(char **pwd, int len)
 {
-	int	i;
+	int		i;
 	char	*str1;
 	char	*str2;
 	char	*temp;
@@ -22,7 +22,6 @@ static char	*get_home(char **pwd, int len)
 	i = 0;
 	str1 = ft_strdup("/");
 	str2 = NULL;
-	temp = NULL;
 	while (i < len)
 	{
 		if (!str2)
@@ -32,8 +31,8 @@ static char	*get_home(char **pwd, int len)
 			temp = ft_strdup(str2);
 			free(str2);
 			str2 = ft_strjoin(temp, "/");
-			free (temp);
-			temp = ft_strdup (str2);
+			free(temp);
+			temp = ft_strdup(str2);
 			free(str2);
 			str2 = ft_strjoin(temp, pwd[i]);
 		}
@@ -60,8 +59,8 @@ static char	*get_home_inner(char **pwd, int len_home, int len_pwd)
 			temp = ft_strdup(str2);
 			free(str2);
 			str2 = ft_strjoin(temp, "/");
-			free (temp);
-			temp = ft_strdup (str2);
+			free(temp);
+			temp = ft_strdup(str2);
 			free(str2);
 			str2 = ft_strjoin(temp, pwd[len_home]);
 			free(temp);
@@ -98,7 +97,7 @@ static char	*build_prompt(char *logname, char *hostname, char **pwd,
 	if (arrlen_pwd - arrlen_home > 0 && arrlen_pwd > 0)
 		temp2 = get_home_inner(pwd, arrlen_home, arrlen_pwd);
 	else if (arrlen_pwd - arrlen_home < 0 && arrlen_pwd > 0)
-		temp2 = get_home(home, arrlen_pwd);
+		temp2 = get_home(pwd, arrlen_pwd);
 	else if (arrlen_pwd == 0)
 		temp2 = ft_strdup("/$ ");
 	else if (arrlen_pwd - arrlen_home == 0)

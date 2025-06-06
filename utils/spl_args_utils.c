@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 13:55:11 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:59:31 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,19 @@ void	extract_outer_string(char **res, char *arg, int *i, t_args **args)
 	while (arg[j])
 	{
 		if (!*res && (arg[j] == '\"' || arg[j] == '\''))
-			return;
+			return ;
 		if (*res && (arg[j] == '\"' || arg[j] == '\''))
 		{
 			update_args(res, args);
 			return ;
 		}
-		if (arg[j] != '\"' && arg[j] != '\'')
-		{
+		if (arg[j] != '\"' && arg[j] != '\'' && arg[j] != ' ')
 			add_to_str(res, 1, &arg[j]);
-			if (arg[j] == ' ')
-				update_args(res, args);
+		if (arg[j] != '\"' && arg[j] != '\'' && arg[j] == ' ')
+		{
+			update_args(res, args);
+			add_to_str(res, 1, &arg[j]);
+			update_args(res, args);
 		}
 		j++;
 		*i += 1;

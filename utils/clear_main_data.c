@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clear_main_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 13:04:53 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 13:16:50 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:39:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include	"../includes/minishell.h"
+#include "../includes/minishell.h"
 
 void	del(void *var)
 {
-	char *free_var;
+	char	*free_var;
 
 	free_var = (char *)var;
 	if (free_var)

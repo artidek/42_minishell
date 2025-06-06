@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 14:11:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/05 12:58:05 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int					fill_commands(t_main_dat *main_data, char **paths);
 int					built_in(char *arg);
 int					is_builtin(t_main_dat *main_data, t_seq *seq);
 int					launch_redir(t_seq *sequence);
-int					heredoc(char *eof);
+int					heredoc(char *eof, int *status);
 int					fill_redir(t_main_dat *main_data);
 int					launch_heredocs(t_seq *seq, t_main_dat *main_data);
 int					is_var(char **argv, t_main_dat *main_data);

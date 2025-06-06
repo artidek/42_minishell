@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   in_proc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 09:44:11 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 10:50:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:48:56 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,16 @@ typedef struct s_input_data
 
 int					alloc_str(char **str, int size);
 int					is_heredoc(char *input);
+int					dollar_check(char *arg, t_expand **exp, char **str, int j);
 char				*init_prompt(void);
 void				add_expand(t_expand **exp, t_expand *new_exp);
 void				clear_expand(t_expand **exp);
 void				skip_sp(char **str, char *arg, int *i);
 void				update_expand(t_expand **exp, char **str, int ex);
 void				join_expanded(char **arg, t_expand *exp);
-void				seg_init(int signal, void(sig_handler)(int));
+void				seg_init(int signal, void (sig_handler)(int));
 void				s_q_expand(char *arg, t_expand **exp, int *i);
+void				upd_str(t_expand **exp, char **str);
 t_expand			*new_expand(char *exp_str, int exp);
 
 #endif

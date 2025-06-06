@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:48:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 14:12:59 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:16:53 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static t_list	*init_vars()
+static t_list	*init_vars(void)
 {
 	char	*str;
 	char	*num_to_str;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
+#    By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/06/03 13:47:14 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/06/06 14:57:34 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/
 		utils/spl_args_utils.c utils/arguments.c utils/valid.c utils/arguments.c utils/sequence_list.c utils/arguments.c utils/sequence_utils.c \
 		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/tty_ctl.c utils/expand.c utils/parsing.c utils/clean_up.c utils/clean_up_utils.c \
 		utils/clear_main_data.c
-BUILTINS = builtins/cdpwd.c builtins/echo.c builtins/exit.c builtins/exp.c builtins/unset.c builtins/env.c
-EXPAND = expand/expand_list.c expand/expand.c expand/parsing.c expand/utils.c
+BUILTINS = builtins/cdpwd.c builtins/echo.c builtins/exit.c builtins/exp.c builtins/unset.c builtins/env.c builtins/echo_add.c
+EXPAND = expand/expand_list.c expand/expand.c expand/parsing.c expand/utils.c expand/exp_helpers.c
 
 UTILOBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(UTILS)))
 IN_PROC_OBJS = $(patsubst %.c, ./objs/%.o, $(notdir $(IN_PROC)))

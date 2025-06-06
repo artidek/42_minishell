@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 00:24:29 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 11:39:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:37:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 char	**nw_argv(t_args *new_args)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 	t_args	*temp;
 	char	**new_arg;
 

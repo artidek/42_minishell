@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:20:43 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 23:31:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:59:52 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	closed(char *arg, int pos, unsigned char quote)
 	while (arg[pos])
 	{
 		if (arg[pos] == quote)
-			return(1);
+			return (1);
 		pos++;
 	}
 	return (0);
@@ -79,12 +79,12 @@ static int	check_semicol(char *arg)
 	return (0);
 }
 
-int	 check_valid(char **args)
+int	check_valid(char **args)
 {
 	int	i;
 
 	i = 0;
-	while(args && args[i])
+	while (args && args[i])
 	{
 		if (check_semicol(args[i]))
 		{

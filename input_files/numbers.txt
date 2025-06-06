@@ -1,0 +1,6 @@
+12 apples
+34 oranges
+56 bananas
+78 grapes
+90 pineapples
+

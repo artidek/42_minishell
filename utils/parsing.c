@@ -6,16 +6,16 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:49:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/26 18:44:13 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:39:02 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static void	join_arg(char **arg, char **arr)
 {
-	int	i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	free(*arg);
@@ -31,31 +31,31 @@ static void	join_arg(char **arg, char **arr)
 	}
 }
 
-void	check_double_quote (char **arg, t_main_dat *main_data)
+void	check_double_quote(char **arg, t_main_dat *main_data)
 {
-	char **temp;
+	char	**temp;
 
 	trim_arg(arg);
 	temp = ft_split(*arg, '\"');
 	if (arr_len(temp) <= 1)
 	{
 		free_arr(temp);
-		return;
+		return ;
 	}
 	join_arg(arg, temp);
 	expandable(arg, main_data);
 }
 
-void	check_single_quote (char **arg, t_main_dat *main_data)
+void	check_single_quote(char **arg, t_main_dat *main_data)
 {
-	char **temp;
+	char	**temp;
 
 	trim_arg(arg);
 	temp = ft_split(*arg, '\'');
 	if (arr_len(temp) <= 1)
 	{
 		free_arr(temp);
-		return;
+		return ;
 	}
 	join_arg(arg, temp);
 	expandable(arg, main_data);

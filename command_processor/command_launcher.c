@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 21:37:03 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:10:40 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	g_sig = 0;
 void	wait_and_clear(t_main_dat *main_data)
 {
 	t_seq	*seq;
-	int	status;
+	int		status;
 
 	seq = main_data->sequence;
 	while (seq)
@@ -42,10 +42,10 @@ void	sighandler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1,"^C\n", 3);
+		write(1, "^C\n", 3);
 		g_sig = 130;
 	}
-	if(sig == SIGQUIT)
+	if (sig == SIGQUIT)
 	{
 		write(1, "^\\Quit (core dumped)\n", 22);
 		g_sig = 131;
@@ -69,7 +69,7 @@ int	is_builtin(t_main_dat *main_data, t_seq *seq)
 	if (i >= 0)
 	{
 		main_data->func_ptr[i](main_data, commands->argv);
-		if(!main_data->sequence->next)
+		if (!main_data->sequence->next)
 			clear_command_proc(main_data);
 		return (1);
 	}
@@ -78,7 +78,7 @@ int	is_builtin(t_main_dat *main_data, t_seq *seq)
 
 void	single_command(t_main_dat *main_data)
 {
-	int					pid;
+	int	pid;
 
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
@@ -87,7 +87,8 @@ void	single_command(t_main_dat *main_data)
 		clear_command_proc(main_data);
 		return ;
 	}
-	if (main_data->sequence->commands->argv && !is_builtin(main_data, main_data->sequence))
+	if (main_data->sequence->commands->argv && !is_builtin(main_data,
+			main_data->sequence))
 	{
 		pid = fork();
 		if (process_failed(pid))

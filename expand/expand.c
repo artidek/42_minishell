@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 22:48:42 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 21:06:48 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:17:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void	get_var(t_expand **exp, t_main_dat *main_data)
 			free((*exp)->exp_str);
 			free_arr(eq_split);
 			(*exp)->exp_str = var_val(env_tmp->content);
-			return;
+			return ;
 		}
 		free_arr(eq_split);
 		env_tmp = env_tmp->next;
 	}
-	free ((*exp)->exp_str);
+	free((*exp)->exp_str);
 	(*exp)->exp_str = malloc(sizeof(char));
 	(*exp)->exp_str[0] = 0;
 }
@@ -71,13 +71,15 @@ static int	get_val(t_expand **exp, t_main_dat *main_data)
 	return (0);
 }
 
-int	is_var (char **argv, t_main_dat *main_data)
+int	is_var(char **argv, t_main_dat *main_data)
 {
 	if (arr_len(argv) == 1)
 	{
-		if (ft_strrchr(argv[0], '=') && main_data->pipe && argv[0][0] != '\'' && argv[0][0] != '\"')
+		if (ft_strrchr(argv[0], '=') && main_data->pipe && argv[0][0] != '\''
+			&& argv[0][0] != '\"')
 			return (2);
-		if (ft_strrchr(argv[0], '=') && !main_data->pipe && argv[0][0] != '\'' && argv[0][0] != '\"')
+		if (ft_strrchr(argv[0], '=') && !main_data->pipe && argv[0][0] != '\''
+			&& argv[0][0] != '\"')
 		{
 			expandable(&argv[0], main_data);
 			ft_lstadd_back(&main_data->vars, ft_lstnew(ft_strdup(argv[0])));

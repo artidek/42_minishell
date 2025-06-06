@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/01 14:05:25 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:16:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	run_command_processor(t_main_dat *main_data)
 	spl_in = ft_split(main_data->input_data.input, '|');
 	init_sequence(main_data, spl_in);
 	free_arr(spl_in);
-	if(!fill_redir(main_data))
-		return;
+	if (!fill_redir(main_data))
+		return ;
 	if (!init_commands(main_data))
 		return ;
 	if (main_data->sequence->commands->argv)

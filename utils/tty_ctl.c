@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty_ctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 23:48:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:57:17 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ void	enable_echoctl(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+int	cmd_not_found(char *arg)
+{
+	if (!check_exist(arg))
+	{
+		ft_printf("%s\n: command not found\n", arg);
+		return (1);
+	}
+	return (0);
 }

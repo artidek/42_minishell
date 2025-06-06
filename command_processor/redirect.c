@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:28:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 13:47:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:57:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static void	update_redir(t_seq **seq, int type, char **file)
 {
@@ -39,7 +39,7 @@ static void	skip_sign(char *str, int *i, char sign)
 	while (str[j])
 	{
 		if (str[j] != sign)
-			return;
+			return ;
 		j++;
 		*i += 1;
 	}
@@ -47,9 +47,9 @@ static void	skip_sign(char *str, int *i, char sign)
 
 static void	extract_redir(t_seq **seq, char *str)
 {
-	int	i;
-	int	type;
-	char *file;
+	int		i;
+	int		type;
+	char	*file;
 
 	i = 0;
 	file = NULL;
@@ -74,9 +74,9 @@ static void	extract_redir(t_seq **seq, char *str)
 	}
 }
 
-int	fill_redir (t_main_dat *main_data)
+int	fill_redir(t_main_dat *main_data)
 {
-	t_seq *sequence;
+	t_seq	*sequence;
 
 	sequence = main_data->sequence;
 	while (sequence)
@@ -93,6 +93,6 @@ int	fill_redir (t_main_dat *main_data)
 		sequence = sequence->next;
 	}
 	if (access("heredoc", R_OK) != -1)
-			redir_in("heredoc");
+		redir_in("heredoc");
 	return (1);
 }

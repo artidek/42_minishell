@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:11:25 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 12:49:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:40:22 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	n_q_inner(char *arg,  int *i, t_expand **exp)
+void	n_q_inner(char *arg, int *i, t_expand **exp)
 {
-	int	j;
+	int		j;
 	char	*str;
 
 	j = 1;
@@ -22,20 +22,15 @@ void	n_q_inner(char *arg,  int *i, t_expand **exp)
 	str = NULL;
 	while (arg[j] && arg[j] != '\"' && arg[j] != '\'' && arg[j] != ' ')
 	{
-		if (arg[j] != '$')
+		if (!dollar_check(arg, exp, &str, j))
 		{
-			add_to_str(&str, 1, arg + j);
-			if (arg[j-1] == '$' && arg[j] == '?')
-			{
-				*i += 1;
-				update_expand(exp, &str, 1);
-				return;
-			}
+			*i += 1;
+			return ;
 		}
 		if (arg[j] && arg[j] == '$' && j > 0)
 		{
 			update_expand(exp, &str, 1);
-			return;
+			return ;
 		}
 		j++;
 		*i += 1;
@@ -45,7 +40,7 @@ void	n_q_inner(char *arg,  int *i, t_expand **exp)
 
 static void	no_quote(char **arg, t_expand **exp)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	i = 0;
@@ -70,7 +65,7 @@ static void	no_quote(char **arg, t_expand **exp)
 
 static void	double_quote(char **arg, t_expand **exp)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	i = 0;
@@ -94,14 +89,12 @@ static void	double_quote(char **arg, t_expand **exp)
 			i++;
 		}
 	}
-	if (str)
-	 update_expand(exp, &str, 0);
-	return;
+	upd_str(exp, &str);
 }
 
 static void	single_quote(char **arg, t_expand **exp)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	i = 0;

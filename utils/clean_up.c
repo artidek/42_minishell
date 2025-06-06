@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/03 21:02:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:36:42 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static void	empty_str(char **arg)
 
 static char	**rebuild_arg(char **arg)
 {
-	int	i;
+	int		i;
 	t_args	*new_args;
-	
+
 	i = 0;
 	new_args = NULL;
 	while (arg[i])
@@ -38,7 +38,7 @@ static char	**rebuild_arg(char **arg)
 
 static void	o_q_s_rem(char **arg)
 {
-	int	i;
+	int		i;
 	char	*str;
 	char	quote;
 
@@ -58,7 +58,7 @@ static void	o_q_s_rem(char **arg)
 	else if (str)
 	{
 		free(*arg);
-		*arg = ft_strdup (str);
+		*arg = ft_strdup(str);
 		free(str);
 	}
 }
@@ -67,7 +67,7 @@ static void	full_clean(char **arg)
 {
 	char	*trimmed;
 	char	*str;
-	int	i;
+	int		i;
 
 	i = 0;
 	trimmed = ft_strtrim(*arg, " ");
@@ -83,30 +83,28 @@ static void	full_clean(char **arg)
 		}
 		free(*arg);
 		*arg = ft_strdup(str);
-		free(trimmed);
 		free(str);
 	}
 	else if (trimmed && !*trimmed)
-	{
 		empty_str(arg);
-		free(trimmed);
-	}
+	free(trimmed);
 }
 
 void	clean_up_arg(char ***arg)
 {
-	int	i;
+	int		i;
 	char	*trimmed;
 
 	i = 0;
 	trimmed = ft_strtrim(*arg[0], " ");
 	free(*arg[0]);
 	*arg[0] = ft_strdup(trimmed);
-	if (**arg && ft_strncmp(trimmed, "echo", ft_strlen(trimmed)) == 0 && ft_strncmp(trimmed, "echo", ft_strlen("echo")) == 0)
+	if (**arg && ft_strncmp(trimmed, "echo", ft_strlen(trimmed)) == 0
+		&& ft_strncmp(trimmed, "echo", ft_strlen("echo")) == 0)
 	{
 		*arg = rebuild_arg(*arg);
 		free(trimmed);
-		return;
+		return ;
 	}
 	else
 	{

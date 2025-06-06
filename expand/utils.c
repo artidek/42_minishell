@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:42:18 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 21:43:57 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:33:27 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	s_q_inner(char *arg, int *j, int *i, t_expand **exp)
 {
-	int	a;
+	int		a;
 	char	*str;
 
 	a = 1;
@@ -28,7 +28,7 @@ static void	s_q_inner(char *arg, int *j, int *i, t_expand **exp)
 			*j += 1;
 			*i += 1;
 			update_expand(exp, &str, 1);
-			return;
+			return ;
 		}
 		a++;
 		*j += 1;
@@ -38,7 +38,7 @@ static void	s_q_inner(char *arg, int *j, int *i, t_expand **exp)
 
 void	s_q_expand(char *arg, t_expand **exp, int *i)
 {
-	int	j;
+	int		j;
 	char	*str;
 
 	j = 1;
@@ -62,7 +62,6 @@ void	s_q_expand(char *arg, t_expand **exp, int *i)
 void	join_expanded(char **arg, t_expand *exp)
 {
 	free(*arg);
-
 	*arg = NULL;
 	while (exp)
 	{

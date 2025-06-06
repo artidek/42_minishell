@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:02:56 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/30 09:55:34 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:59:08 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,23 @@ int	isalldigit(char *str)
 
 void	clear_command_proc(t_main_dat *main_data)
 {
-		restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
-		unlink("heredoc");
-		clear_sequence(&main_data->sequence);
-		main_data->sequence = NULL;
+	restore_sys_files(main_data->stdin_cp, main_data->stdout_cp);
+	unlink("heredoc");
+	clear_sequence(&main_data->sequence);
+	main_data->sequence = NULL;
 }
 
 int	built_in(char *arg)
 {
-	int	i;
-	char **b_names;
+	int		i;
+	char	**b_names;
 
 	i = 0;
 	b_names = ft_split("cd,echo,pwd,export,unset,env,exit", ',');
 	while (b_names[i])
 	{
-		if (strncmp(b_names[i], arg, ft_strlen(arg)) == 0 && strncmp(b_names[i], arg, ft_strlen(b_names[i])) == 0)
+		if (strncmp(b_names[i], arg, ft_strlen(arg)) == 0 && strncmp(b_names[i],
+				arg, ft_strlen(b_names[i])) == 0)
 		{
 			free_arr(b_names);
 			return (i);
@@ -64,5 +65,13 @@ void	init_str(char **str, char **array)
 	if (len > 1)
 		*str = ft_strjoin(array[0], " ");
 	else
-		*str = ft_strdup (array[0]);
+		*str = ft_strdup(array[0]);
+}
+
+int	n_pth_bin(t_seq **sequence)
+{
+	if (!(*sequence)->commands->path
+		&& built_in((*sequence)->commands->argv[0]) < 0)
+		return (0);
+	return (1);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_launcher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:44:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/31 13:48:06 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:12:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 static int	redir_append(char *file)
 {
@@ -20,7 +20,7 @@ static int	redir_append(char *file)
 	if (fd < 0 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("minishell");
-		return(0);
+		return (0);
 	}
 	close(fd);
 	return (1);
@@ -34,7 +34,7 @@ static int	redir_out(char *file)
 	if (fd < 0 || dup2(fd, STDOUT_FILENO) == -1)
 	{
 		perror("minishell");
-		return(0);
+		return (0);
 	}
 	close(fd);
 	return (1);

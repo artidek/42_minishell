@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:20:44 by svolkau           #+#    #+#             */
-/*   Updated: 2025/05/30 21:19:28 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:01:40 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ t_shenv				*initshellenv(t_shenv *en, char **env);
 void				freeenv(t_shenv *en);
 int					getposeql(char *str);
 void				addback(t_shenv **en, t_shenv *new);
-t_shenv				*new (char *key, char *value, int export);
+t_shenv				*new(char *key, char *value, int export);
+int					checkcmd(char *strcmd, int mes);
+char				*trimall(char *str);
+char				*cwd(void);
+void				readprintdir(char *str);
+void				printarreach(char **gv, int i);
 
 #endif

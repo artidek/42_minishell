@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 21:09:30 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:07:58 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,23 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 	int	j;
 
 	j = 0;
-	if ((str[j] == '<' && str[j + 1] == ' ') || (str[j] == '>' && str[j + 1] == ' '))
+	if ((str[j] == '<' && str[j + 1] == ' ') || (str[j] == '>' && str[j
+				+ 1] == ' '))
 	{
 		add_to_str(redir_str, 1, &str[j]);
 		j++;
 		*i += 1;
 		skip_space(&str[j], &j, i);
 	}
-	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j + 2] == ' '))
+	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j
+				+ 2] == ' '))
 	{
 		add_to_str(redir_str, 2, &str[j]);
 		j += 2;
 		*i += 2;
 		skip_space(&str[j], &j, i);
 	}
-	while (str[j])
-	{
-		if ((str[j] == ' ' || str[j] == '>' || str[j] == '<') && j > 0)
-			return ;
-		add_to_str(redir_str, 1, &str[j]);
-		*i += 1;
-		j++;
-	}
+	proceed_iterate(redir_str, str, i, j);
 }
 
 static void	update_cmd_str(char **cmd_str, char *str, int *i)
@@ -49,7 +44,7 @@ static void	update_cmd_str(char **cmd_str, char *str, int *i)
 	while (str[j])
 	{
 		if (str[j] == '>' || str[j] == '<')
-			return;
+			return ;
 		add_to_str(cmd_str, 1, &str[j]);
 		*i += 1;
 		j++;
@@ -87,11 +82,11 @@ static void	split_input(t_seq **sequence, char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] && ((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<' && str[i
-				+ 1] != '<')))
+		if (str[i] && ((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<'
+					&& str[i + 1] != '<')))
 			update_redir_str(&((*sequence)->temp_redir), &i, 1, &str[i]);
-		if (str[i] && ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<' && str[i
-				+ 1] == '<')))
+		if (str[i] && ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<'
+					&& str[i + 1] == '<')))
 			update_redir_str(&((*sequence)->temp_redir), &i, 2, &str[i]);
 		if (str[i] && str[i] != '<' && str[i] != '>')
 			update_cmd_str(&((*sequence)->temp_cmd), &str[i], &i);

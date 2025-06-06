@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:30:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/18 14:30:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:29:01 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	alloc_str(char **str, int size)
 	return (1);
 }
 
-void	seg_init(int signal, void(sig_handler)(int))
+void	seg_init(int signal, void (sig_handler)(int))
 {
 	struct sigaction	sa;
 
@@ -56,7 +56,7 @@ void	seg_init(int signal, void(sig_handler)(int))
 	sigaction(signal, &sa, NULL);
 }
 
-int absl(int num)
+int	absl(int num)
 {
 	if (num < 0)
 		return (-num);

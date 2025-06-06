@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   sequence_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:47:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/23 21:04:51 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:38:11 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
+
+void	proceed_iterate(char **redir_str, char *str, int *i, int j)
+{
+	while (str[j])
+	{
+		if ((str[j] == ' ' || str[j] == '>' || str[j] == '<') && j > 0)
+			return ;
+		add_to_str(redir_str, 1, &str[j]);
+		*i += 1;
+		j++;
+	}
+}
 
 void	add_to_str(char **str_add, int size, char *str)
 {
@@ -22,7 +34,7 @@ void	add_to_str(char **str_add, int size, char *str)
 	{
 		*str_add = malloc(sizeof(char) * size + 1);
 		ft_strlcpy(*str_add, str, size + 1);
-		return;
+		return ;
 	}
 	temp = ft_strdup(*str_add);
 	free(*str_add);
@@ -41,7 +53,7 @@ void	skip_space(char *str, int *j, int *i)
 	while (str[a])
 	{
 		if (str[a] != ' ')
-			return;
+			return ;
 		*j += 1;
 		*i += 1;
 		a++;

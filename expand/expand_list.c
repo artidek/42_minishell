@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 20:00:47 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/05/29 12:35:39 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:18:13 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_expand	*new_expand(char *exp_str, int exp)
 
 void	add_expand(t_expand **exp, t_expand *new_exp)
 {
-	t_expand *temp;
+	t_expand	*temp;
 
 	if (!*exp)
 	{
@@ -35,7 +35,7 @@ void	add_expand(t_expand **exp, t_expand *new_exp)
 		return ;
 	}
 	temp = *exp;
-	while(temp->next)
+	while (temp->next)
 		temp = temp->next;
 	temp->next = new_exp;
 }
