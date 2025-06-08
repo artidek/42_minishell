@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 11:28:27 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 10:57:18 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 13:14:18 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_redir_type(char *str)
 	return (0);
 }
 
-static void	skip_sign(char *str, int *i, char sign)
+void	skip_sign(char *str, int *i, char sign)
 {
 	int	j;
 

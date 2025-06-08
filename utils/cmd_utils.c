@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:57:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:06:14 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*no_path_arg(t_seq **sequence, char **paths)
+static char	*no_path_arg(t_seq **sequence, char **paths, t_main_dat *main_data)
 {
 	char	*res;
 	char	*arg;
@@ -20,11 +20,11 @@ static char	*no_path_arg(t_seq **sequence, char **paths)
 	res = NULL;
 	arg = (*sequence)->commands->argv[0];
 	if (built_in(arg) < 0)
-		res = find_path(arg, paths);
+		res = find_path(arg, paths, main_data);
 	return (res);
 }
 
-static int	init_path(t_seq **sequence, char **paths)
+static int	init_path(t_seq **sequence, char **paths, t_main_dat *main_data)
 {
 	int		i;
 	char	*first_arg;
@@ -33,9 +33,9 @@ static int	init_path(t_seq **sequence, char **paths)
 	first_arg = (*sequence)->commands->argv[0];
 	while ((*sequence)->commands->argv[i] && (*sequence)->commands->argv[0][i])
 	{
-		if ((*sequence)->commands->argv[0][i] == '/')
+		if (strrchr(first_arg, '/'))
 		{
-			if (cmd_not_found(first_arg))
+			if (cmd_not_found(first_arg, main_data))
 				return (0);
 			else
 			{
@@ -45,7 +45,7 @@ static int	init_path(t_seq **sequence, char **paths)
 		}
 		i++;
 	}
-	(*sequence)->commands->path = no_path_arg(sequence, paths);
+	(*sequence)->commands->path = no_path_arg(sequence, paths, main_data);
 	if (!n_pth_bin(sequence))
 		return (0);
 	return (1);
@@ -98,7 +98,7 @@ int	fill_commands(t_main_dat *main_data, char **paths)
 	{
 		if (!init_args(main_data, &temp))
 			return (0);
-		if (temp->commands->argv && !init_path(&temp, paths))
+		if (temp->commands->argv && !init_path(&temp, paths, main_data))
 			return (0);
 		temp = temp->next;
 	}

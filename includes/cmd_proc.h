@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:56:38 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:37:35 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int					check_exist(char *path);
 int					redir_in(char *file);
 int					n_pth_bin(t_seq **sequence);
 int					stop_quotes(char quote, char *input);
-int					cmd_not_found(char *arg);
 void				clear_redirect(t_redir **redirect);
 void				add_redirect(t_redir **redir, t_redir *new_redir);
 void				skip_space(char *str, int *j, int *i);
@@ -88,11 +87,13 @@ void				extract_outer_string(char **res, char *arg, int *i,
 void				update_args(char **res, t_args **args);
 void				write_quotes(int write_end, char *input);
 void				clean_up_arg(char ***arg);
+void				skip_sign(char *str, int *i, char sign);
 void				proceed_iterate(char **redir_str, char *str, int *i, int j);
-char				**nw_argv(t_args *new_args);
-char				*find_path(char *cmd, char **paths);
+void				redir_str(t_seq **sequence, char *str);
+void				join_arg(char **arg, char *str, int *i);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);
+char				**first_split(char *input);
 t_redir				*new_redir(int type, char *file);
 t_args				*create_node_a(char *argument);
 

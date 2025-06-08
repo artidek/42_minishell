@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   spl_args_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:39:52 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:59:31 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:31:46 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	**first_split(char *input)
+{
+	int	i;
+	char **res;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '\"' || input[i] == '\'')
+		{
+			if (ft_strrchr(&input[i], '|'))
+			{
+				res = malloc(sizeof(char *) * 2);
+				res[0] = ft_strdup(input);
+				res[1] = NULL;
+				return (res);
+			}
+		}
+		i++;
+	}
+	return (ft_split(input, '|'));
+}
 
 void	update_args(char **res, t_args **args)
 {

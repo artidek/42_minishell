@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 11:16:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 10:42:58 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static char	**get_paths(t_shenv *env)
 	paths = NULL;
 	while (env)
 	{
-		if (strncmp("PATH", env->key, ft_strlen(env->key)) == 0)
+		if (strncmp("PATH", env->key, ft_strlen(env->key)) == 0
+			&& ft_strlen("PATH") == ft_strlen(env->key))
 		{
 			paths = ft_split(env->value, ':');
 			return (paths);
@@ -94,7 +95,7 @@ void	run_command_processor(t_main_dat *main_data)
 	main_data->stdout_cp = dup(STDOUT_FILENO);
 	if (!*(main_data->input_data.input))
 		return ;
-	spl_in = ft_split(main_data->input_data.input, '|');
+	spl_in = first_split(main_data->input_data.input);
 	init_sequence(main_data, spl_in);
 	free_arr(spl_in);
 	if (!fill_redir(main_data))

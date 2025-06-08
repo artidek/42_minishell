@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:33:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:28:01 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:04:05 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,13 @@ int	check_exist(char *path)
 	return (0);
 }
 
-char	*find_path(char *cmd, char **paths)
+static void	handle_error(t_main_dat *main_data, char *cmd)
+{
+	ft_printf("%s: command not found\n", cmd);
+	handle_exit(main_data, 127);
+}
+
+char	*find_path(char *cmd, char **paths, t_main_dat *main_data)
 {
 	char	*path;
 	char	*temp;
@@ -43,6 +49,6 @@ char	*find_path(char *cmd, char **paths)
 		i++;
 	}
 	if (errno == 2)
-		ft_printf("%s: command not found\n", cmd);
+		handle_error(main_data, cmd);
 	return (path);
 }

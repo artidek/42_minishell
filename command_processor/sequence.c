@@ -3,37 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 11:07:58 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:52:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	iterate_next(char **redir_str, char *str, int *i)
+static void	iterate_cmd(char *str, int *i, int *j)
 {
-	int	j;
+	int	a;
 
-	j = 0;
-	if ((str[j] == '<' && str[j + 1] == ' ') || (str[j] == '>' && str[j
-				+ 1] == ' '))
+	a = 0;
+	while (str[a])
 	{
-		add_to_str(redir_str, 1, &str[j]);
-		j++;
-		*i += 1;
-		skip_space(&str[j], &j, i);
+		if (str[a] == '<' || str[a] == '>')
+			a++;
+		if (str[a] == '<' || str[a] == '>')
+			a++;
+		if (str[a] == ' ')
+		{
+			while (str[a] && str[a] == ' ')
+				a++;
+		}
+		a++;
+		if (!str[a] || str[a] == ' ' || str[a] == '\'' || str[a] == '\"')
+		{
+			*j += a;
+			*i += a;
+			return;
+		}
 	}
-	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j
-				+ 2] == ' '))
-	{
-		add_to_str(redir_str, 2, &str[j]);
-		j += 2;
-		*i += 2;
-		skip_space(&str[j], &j, i);
-	}
-	proceed_iterate(redir_str, str, i, j);
 }
 
 static void	update_cmd_str(char **cmd_str, char *str, int *i)
@@ -44,35 +46,39 @@ static void	update_cmd_str(char **cmd_str, char *str, int *i)
 	while (str[j])
 	{
 		if (str[j] == '>' || str[j] == '<')
-			return ;
-		add_to_str(cmd_str, 1, &str[j]);
-		*i += 1;
-		j++;
+		{
+			iterate_cmd(&str[j], i , &j);
+			return;
+		}
+		if (str[j] == '\'' || str[j] == '\"')
+			return;
+		if (str[j])
+		{
+			add_to_str(cmd_str, 1, &str[j]);
+			*i += 1;
+			j++;
+		}
 	}
 }
 
-static void	update_redir_str(char **redir_str, int *i, int num_symb, char *str)
+static void	in_quotes(t_seq **sequence, char *str, int *i, char quote)
 {
 	int	j;
 
-	j = 0;
-	if (num_symb > 1 && !*redir_str)
+	j = 1;
+	add_to_str(&(*sequence)->temp_cmd, 1, str);
+	*i += 1;
+	while (str[j])
 	{
-		add_to_str(redir_str, 2, str);
-		*i += 2;
-		j = 2;
-		if (str[j] == ' ')
-			skip_space(&str[j], &j, i);
-	}
-	else if (num_symb == 1 && !*redir_str)
-	{
-		add_to_str(redir_str, 1, str);
+		add_to_str(&(*sequence)->temp_cmd, 1, &str[j]);
+		if (str[j] == quote)
+		{
+			*i += 1;
+			return ;
+		}
+		j++;
 		*i += 1;
-		j = 1;
-		if (str[j] == ' ')
-			skip_space(&str[j], &j, i);
 	}
-	iterate_next(redir_str, &str[j], i);
 }
 
 static void	split_input(t_seq **sequence, char *str)
@@ -80,16 +86,15 @@ static void	split_input(t_seq **sequence, char *str)
 	int	i;
 
 	i = 0;
+	redir_str(sequence, str);
 	while (str[i])
 	{
-		if (str[i] && ((str[i] == '>' && str[i + 1] != '>') || (str[i] == '<'
-					&& str[i + 1] != '<')))
-			update_redir_str(&((*sequence)->temp_redir), &i, 1, &str[i]);
-		if (str[i] && ((str[i] == '>' && str[i + 1] == '>') || (str[i] == '<'
-					&& str[i + 1] == '<')))
-			update_redir_str(&((*sequence)->temp_redir), &i, 2, &str[i]);
+		if (str[i] && (str[i] == '\"' || str[i] == '\''))
+			in_quotes(sequence, &str[i], &i, str[i]);
 		if (str[i] && str[i] != '<' && str[i] != '>')
 			update_cmd_str(&((*sequence)->temp_cmd), &str[i], &i);
+		if (str[i] && str[i] != '\"' && str[i] != '\'')
+			i++;
 	}
 }
 

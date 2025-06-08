@@ -3,117 +3,122 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:36:42 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 13:59:13 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	empty_str(char **arg)
+static void	build_new_args(char ***arg, t_args *args)
 {
-	free(*arg);
-	*arg = malloc(sizeof(char));
-	**arg = 0;
+	int		len;
+	int		i;
+	t_args	*temp;
+
+	i = 0;
+	len = 0;
+	free_arr(*arg);
+	temp = args;
+	while (temp)
+	{
+		len++;
+		temp = temp->next;
+	}
+	temp = args;
+	*arg = malloc(sizeof(char *) * (len + 1));
+	while (temp)
+	{
+		(*arg)[i] = ft_strdup(temp->arg);
+		i++;
+		temp = temp->next;
+	}
+	(*arg)[i] = NULL;
 }
 
-static char	**rebuild_arg(char **arg)
+static void	inner_str(char *str, char **arg, int *i)
+{
+	int	j;
+
+	j = 0;
+	*i += 1;
+	while (str[j])
+	{
+		if (str[j] && (str[j] == '\'' || str[j] == '\"'))
+			return ;
+		if (str[j])
+			add_to_str(arg, 1, &str[j]);
+		if (str[j])
+		{
+			j++;
+			*i += 1;
+		}
+	}
+}
+
+static void	final_split(char ***args, char *str)
 {
 	int		i;
+	char	*arg;
 	t_args	*new_args;
 
 	i = 0;
 	new_args = NULL;
+	arg = NULL;
+	while (str[i])
+	{
+		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
+			inner_str(&str[i + 1], &arg, &i);
+		if (str[i] && arg && str[i] == ' ')
+		{
+			skip_sign(&str[i], &i, ' ');
+			add_node_a(&new_args, create_node_a(ft_strdup(arg)));
+			free(arg);
+			arg = NULL;
+		}
+		join_arg(&arg, str, &i);
+	}
+	if (arg)
+		add_node_a(&new_args, create_node_a(ft_strdup(arg)));
+	free(arg);
+	build_new_args(args, new_args);
+	clear_list_a(&new_args, del_a);
+}
+
+static void	rebuild_i_s(char **arg, char **nw_temp_cmd)
+{
+	int	i;
+
+	i = 0;
 	while (arg[i])
 	{
-		if (arg[i] && arg[i][0])
-			add_node_a(&new_args, create_node_a(ft_strdup(arg[i])));
+		add_to_str(nw_temp_cmd, ft_strlen(arg[i]), arg[i]);
 		i++;
 	}
-	free_arr(arg);
-	return (nw_argv(new_args));
-}
-
-static void	o_q_s_rem(char **arg)
-{
-	int		i;
-	char	*str;
-	char	quote;
-
-	i = 0;
-	str = NULL;
-	quote = 0;
-	if (**arg == '\"' || **arg == '\'')
-		quote = **arg;
-	while ((*arg)[i] && quote)
-	{
-		if ((*arg)[i] != quote && (*arg)[i] != '\\')
-			add_to_str(&str, 1, &(*arg)[i]);
-		i++;
-	}
-	if (quote && !str)
-		empty_str(arg);
-	else if (str)
-	{
-		free(*arg);
-		*arg = ft_strdup(str);
-		free(str);
-	}
-}
-
-static void	full_clean(char **arg)
-{
-	char	*trimmed;
-	char	*str;
-	int		i;
-
-	i = 0;
-	trimmed = ft_strtrim(*arg, " ");
-	o_q_s_rem(&trimmed);
-	str = NULL;
-	if (trimmed && *trimmed)
-	{
-		while (trimmed[i])
-		{
-			if (trimmed[i] != '\n')
-				add_to_str(&str, 1, &trimmed[i]);
-			i++;
-		}
-		free(*arg);
-		*arg = ft_strdup(str);
-		free(str);
-	}
-	else if (trimmed && !*trimmed)
-		empty_str(arg);
-	free(trimmed);
 }
 
 void	clean_up_arg(char ***arg)
 {
-	int		i;
 	char	*trimmed;
+	char	*nw_temp_cmd;
 
-	i = 0;
 	trimmed = ft_strtrim(*arg[0], " ");
 	free(*arg[0]);
 	*arg[0] = ft_strdup(trimmed);
+	nw_temp_cmd = NULL;
 	if (**arg && ft_strncmp(trimmed, "echo", ft_strlen(trimmed)) == 0
 		&& ft_strncmp(trimmed, "echo", ft_strlen("echo")) == 0)
 	{
-		*arg = rebuild_arg(*arg);
 		free(trimmed);
 		return ;
 	}
 	else
 	{
-		while ((*arg)[i])
-		{
-			full_clean(&(*arg)[i]);
-			i++;
-		}
+		rebuild_i_s(*arg, &nw_temp_cmd);
+		final_split(arg, nw_temp_cmd);
+		free(nw_temp_cmd);
 	}
 	free(trimmed);
-	*arg = rebuild_arg(*arg);
 }

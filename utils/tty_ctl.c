@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty_ctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:57:17 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 16:58:25 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void	enable_echoctl(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-int	cmd_not_found(char *arg)
+int	cmd_not_found(char *arg, t_main_dat *main_data)
 {
 	if (!check_exist(arg))
 	{
-		ft_printf("%s\n: command not found\n", arg);
+		handle_exit(main_data, 127);
+		ft_printf("minishell: ");
+		ft_printf("%s: No such file or directory\n", arg);
 		return (1);
 	}
 	return (0);

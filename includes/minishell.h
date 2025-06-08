@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/05 12:58:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/07 12:04:34 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int					launch_redir(t_seq *sequence);
 int					heredoc(char *eof, int *status);
 int					fill_redir(t_main_dat *main_data);
 int					launch_heredocs(t_seq *seq, t_main_dat *main_data);
+int					cmd_not_found(char *arg, t_main_dat *main_data);
 int					is_var(char **argv, t_main_dat *main_data);
 void				clear_command_proc(t_main_dat *main_data);
 void				run_command_processor(t_main_dat *main_data);
@@ -73,6 +74,7 @@ void				handle_exit(t_main_dat *main_data, int status);
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
 char				*build_str(char **str1, char **str2, char *str3);
+char				*find_path(char *cmd, char **paths, t_main_dat *main_data);
 char				**get_pwd(void);
 
 #endif

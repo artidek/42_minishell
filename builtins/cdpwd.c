@@ -6,7 +6,7 @@
 /*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:20:15 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/06 14:53:22 by svolkau          ###   ########.fr       */
+/*   Updated: 2025/06/07 10:46:11 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ int	ft_cd(t_main_dat *main_data, char **gv)
 	t_shenv	*en;
 
 	en = main_data->env_cp;
+	int i = 0;
+	while(gv[i])
+	{
+		ft_printf("%d |%s|\n", i, gv[i]);
+		i++;
+	}
 	if (arr_len(gv) > 2)
 	{
 		ft_printf("minishell: cd: too many arguments\n");

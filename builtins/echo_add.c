@@ -6,7 +6,7 @@
 /*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 10:58:53 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/06 13:05:47 by svolkau          ###   ########.fr       */
+/*   Updated: 2025/06/07 12:31:10 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ void	readprintdir(char *str)
 		while (dirs != NULL)
 		{
 			if (ft_strncmp(".", dirs->d_name, ft_strlen(dirs->d_name)) != 0
-				&& ft_strncmp("..", dirs->d_name, ft_strlen(dirs->d_name)) != 0)
-				ft_printf("%s ", dirs->d_name);
+				&& ft_strncmp("..", dirs->d_name, ft_strlen(dirs->d_name)) != 0
+				&& dirs->d_name[0] != '.')
+				ft_printf("%s", dirs->d_name);
 			dirs = readdir(dir);
+			if (dirs != NULL && dirs->d_name[0] != '.'
+				&& ft_strncmp(".", dirs->d_name, ft_strlen(dirs->d_name)) != 0
+				&& ft_strncmp("..", dirs->d_name, ft_strlen(dirs->d_name)) != 0)
+				ft_printf(" ");
 		}
 	}
-	else
-		ft_printf("minishell: echo: Cannot open directory '%s'\n", str);
 	closedir(dir);
 }
 
@@ -89,8 +92,11 @@ void	printarreach(char **gv, int i)
 	}
 	else
 		ft_printf("%s", trimstr);
-	if ((ft_strlen(trimstr) != 0)
-		&& (ft_strncmp("*", gv[i], len) != 0) && gv[i + 1])
-		ft_printf(" ");
+	if (ft_strlen(trimstr) != 0 && ft_strncmp("*", gv[i], len) != 0
+		&& gv[i + 1])
+	{
+		if (ft_strncmp(" ", gv[i + 1], ft_strlen(gv[i + 1])) == 0)
+			ft_printf(" ");
+	}
 	free(trimstr);
 }

@@ -6,7 +6,7 @@
 /*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 09:17:17 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/06 13:14:23 by svolkau          ###   ########.fr       */
+/*   Updated: 2025/06/07 10:06:50 by svolkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	mainecho(char **gv, int i)
 	int		len;
 	char	*trimstr;
 
-	trimstr = trimall(gv[i]);
+	trimstr = trimall(gv[++i]);
 	len = ft_strlen(trimstr);
 	if (len == 0)
 		len += 1;
