@@ -1,11 +1,11 @@
-<access.log grep 'ERROR' | wc -l>error_count.txt
-<words.txt sort | uniq>unique_words.txt
-<server.log awk '{print $1}' | sort | uniq>ips.txt
-<document.txt tr -s ' ' '\n' | sort | uniq -c>word_freq.txt
-<book.txt tr -s ' ' '\n' | sort | uniq -c | sort -nr | head -10>top_words.txt
-<auth.log awk '{print $1}' | sort | uniq -c>user_count.txt
-<numbers.txt grep -o '[0-9]\+' | paste -sd+ | bc>sum.txt
-<text.txt awk '{print length, $0}' | sort -nr | head -1>longest_line.txt
-<lines.txt wc -l>len_count.txt
-<input.txt tr '[:lower:]' '[:upper:]'>uppercase.txt
+<input_files/access.log grep 'ERROR' | wc -l>error_count.txt
+<input_files/words.txt sort | uniq>unique_words.txt
+<input_files/server.log awk '{print $1}' | sort | uniq>ips.txt
+<input_files/document.txt tr -s ' ' '\n' | sort | uniq -c>word_freq.txt
+<input_files/book.txt tr -s ' ' '\n' | sort | uniq -c | sort -nr | head -10>top_words.txt
+<input_files/auth.log awk '{print $1}' | sort | uniq -c>user_count.txt
+<input_files/numbers.txt grep -o '[0-9]\+' | paste -sd+ | bc>sum.txt
+<input_files/text.txt awk '{print length, $0}' | sort -nr | head -1>longest_line.txt
+<input_files/lines.txt wc -l>len_count.txt
+<input_files/input.txt tr '[:lower:]' '[:upper:]'>uppercase.txt
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 13:05:49 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 11:15:42 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:12:29 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	heredoc_warning(t_main_dat *main_data, char *eof)
 		r_line = read(fd, line, 1);
 	}
 	ft_printf("minishell: warning: here-document at line ");
-	ft_printf("%d", main_data->line_counter);
+	ft_printf("%d ", main_data->line_counter);
 	ft_printf("delimited by end-of-file (wanted `%s')\n", eof);
 }
 

@@ -6,7 +6,7 @@
 #    By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 11:51:53 by aobshatk          #+#    #+#              #
-#    Updated: 2025/06/07 13:16:09 by aobshatk         ###   ########.fr        #
+#    Updated: 2025/06/08 16:55:53 by aobshatk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ IN_PROC = input_processor/input_processor.c input_processor/prompt.c input_proce
 UTILS = utils/helpers.c utils/processes.c utils/prompt.c utils/checkers.c utils/processes.c utils/prompt_utils.c \
 		utils/spl_args_utils.c utils/arguments.c utils/valid.c utils/arguments.c utils/sequence_list.c utils/arguments.c utils/sequence_utils.c \
 		utils/redir_list.c utils/paths.c utils/cmd_utils.c utils/tty_ctl.c utils/expand.c utils/parsing.c utils/clean_up.c utils/clean_up_utils.c \
-		utils/clear_main_data.c
+		utils/clear_main_data.c utils/first_split.c
 BUILTINS = builtins/cdpwd.c builtins/echo.c builtins/exit.c builtins/exp.c builtins/unset.c builtins/env.c builtins/echo_add.c
 EXPAND = expand/expand_list.c expand/expand.c expand/parsing.c expand/utils.c expand/exp_helpers.c
 

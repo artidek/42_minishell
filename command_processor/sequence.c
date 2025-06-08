@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/07 21:52:30 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:05:52 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	split_input(t_seq **sequence, char *str)
 	{
 		if (str[i] && (str[i] == '\"' || str[i] == '\''))
 			in_quotes(sequence, &str[i], &i, str[i]);
-		if (str[i] && str[i] != '<' && str[i] != '>')
+		if (str[i])
 			update_cmd_str(&((*sequence)->temp_cmd), &str[i], &i);
 		if (str[i] && str[i] != '\"' && str[i] != '\'')
 			i++;

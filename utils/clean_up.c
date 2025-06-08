@@ -6,13 +6,13 @@
 /*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 13:59:13 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:14:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	build_new_args(char ***arg, t_args *args)
+void	build_new_args(char ***arg, t_args *args)
 {
 	int		len;
 	int		i;
@@ -20,7 +20,8 @@ static void	build_new_args(char ***arg, t_args *args)
 
 	i = 0;
 	len = 0;
-	free_arr(*arg);
+	if (*arg)
+		free_arr(*arg);
 	temp = args;
 	while (temp)
 	{
