@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/09 11:47:41 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:20:21 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ static void	inner_str(char *str, char **arg, int *i, char quote)
 	{
 		if (str[j] && str[j] == quote)
 		{
+			if (!*arg)
+			{
+				*arg = malloc(sizeof(char) * 1);
+				*arg[0] = 0;
+			}
 			*i += 1;
 			return ;
 		}
@@ -75,18 +80,18 @@ static void	final_split(char ***args, char *str)
 	{
 		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
 			inner_str(&str[i + 1], &arg, &i, str[i]);
-		if (str[i] && arg && str[i] == ' ')
+		if (str[i] && str[i] == ' ')
 		{
 			skip_sign(&str[i], &i, ' ');
-			add_node_a(&new_args, create_node_a(ft_strdup(arg)));
-			free(arg);
-			arg = NULL;
+			add_arg(&new_args, &arg);
 		}
 		join_arg(&arg, str, &i);
 	}
 	if (arg)
+	{
 		add_node_a(&new_args, create_node_a(ft_strdup(arg)));
-	free(arg);
+		free(arg);
+	}
 	build_new_args(args, new_args);
 	clear_list_a(&new_args, del_a);
 }
@@ -105,30 +110,13 @@ static void	rebuild_i_s(char **arg, char **nw_temp_cmd)
 
 void	clean_up_arg(char ***arg)
 {
-	char	*trimmed;
 	char	*nw_temp_cmd;
 
-	trimmed = ft_strtrim(*arg[0], " ");
-	free(*arg[0]);
-	*arg[0] = ft_strdup(trimmed);
 	nw_temp_cmd = NULL;
-	if (**arg && ft_strncmp(trimmed, "echo", ft_strlen(trimmed)) == 0
-		&& ft_strncmp(trimmed, "echo", ft_strlen("echo")) == 0)
-	{
-		free(trimmed);
-		return ;
-	}
-	else
+	if (**arg)
 	{
 		rebuild_i_s(*arg, &nw_temp_cmd);
 		final_split(arg, nw_temp_cmd);
-		int i = 0;
-		while ((*arg)[i])
-		{
-			printf("final %s\n", (*arg)[i]);
-			i++;
-		}
 		free(nw_temp_cmd);
 	}
-	free(trimmed);
 }

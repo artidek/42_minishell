@@ -1,7 +1,8 @@
 {
 	"files.associations": {
 		"libftprintf.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"minishell.h": "c"
 	},
 	"makefile.configureOnOpen": false
 }

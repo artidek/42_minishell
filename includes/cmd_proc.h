@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_proc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:47:23 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 18:59:05 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/09 12:59:40 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void				proceed_iterate(char **redir_str, char *str, int *i, int j);
 void				redir_str(t_seq **sequence, char *str);
 void				join_arg(char **arg, char *str, int *i);
 void				build_new_args(char ***arg, t_args *args);
+void				add_arg(t_args **args, char **arg);
 char				**split_arguments(char *arguments);
 char				**create_argv(t_args **args);
 char				**first_split(char *input);
