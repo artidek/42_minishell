@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 15:35:30 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 17:14:55 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:47:41 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	build_new_args(char ***arg, t_args *args)
 	(*arg)[i] = NULL;
 }
 
-static void	inner_str(char *str, char **arg, int *i)
+static void	inner_str(char *str, char **arg, int *i, char quote)
 {
 	int	j;
 
@@ -47,8 +47,11 @@ static void	inner_str(char *str, char **arg, int *i)
 	*i += 1;
 	while (str[j])
 	{
-		if (str[j] && (str[j] == '\'' || str[j] == '\"'))
+		if (str[j] && str[j] == quote)
+		{
+			*i += 1;
 			return ;
+		}
 		if (str[j])
 			add_to_str(arg, 1, &str[j]);
 		if (str[j])
@@ -71,7 +74,7 @@ static void	final_split(char ***args, char *str)
 	while (str[i])
 	{
 		if (str[i] && (str[i] == '\'' || str[i] == '\"'))
-			inner_str(&str[i + 1], &arg, &i);
+			inner_str(&str[i + 1], &arg, &i, str[i]);
 		if (str[i] && arg && str[i] == ' ')
 		{
 			skip_sign(&str[i], &i, ' ');
@@ -119,6 +122,12 @@ void	clean_up_arg(char ***arg)
 	{
 		rebuild_i_s(*arg, &nw_temp_cmd);
 		final_split(arg, nw_temp_cmd);
+		int i = 0;
+		while ((*arg)[i])
+		{
+			printf("final %s\n", (*arg)[i]);
+			i++;
+		}
 		free(nw_temp_cmd);
 	}
 	free(trimmed);
