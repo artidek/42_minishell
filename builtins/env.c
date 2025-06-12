@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:12:12 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/10 14:02:57 by svolkau          ###   ########.fr       */
+/*   Updated: 2025/06/12 15:09:43 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_shenv	*initshellenv(t_shenv *en, char **env)
 		addback(&en, new(key, value, 0));
 		i++;
 	}
+	addback(&en, new (ft_strdup("0"), ft_strdup("minishell"), 0));
 	return (en);
 }
 
