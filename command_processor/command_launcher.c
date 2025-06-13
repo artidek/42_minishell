@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 16:17:28 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:26:20 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	wait_and_clear(t_main_dat *main_data)
 	while (seq)
 	{
 		waitpid(seq->pid, &status, 0);
+		last_command(main_data, seq);
 		seq = seq->next;
 	}
 	WEXITSTATUS(status);
@@ -67,6 +68,7 @@ int	is_builtin(t_main_dat *main_data, t_seq *seq)
 
 	commands = seq->commands;
 	i = built_in(commands->argv[0]);
+	last_command(main_data, seq);
 	if (i >= 0)
 	{
 		status = main_data->func_ptr[i](main_data, commands->argv);

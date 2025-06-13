@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty_ctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 16:04:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:23:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,20 @@ int	is_dir(t_main_dat *main_data)
 	}
 
 	return (0);
+}
+
+void	last_command(t_main_dat *main_data, t_seq *sequence)
+{
+	t_shenv	*temp;
+
+	temp = main_data->env_cp;
+	while(temp)
+	{
+		if (ft_strncmp("_", temp->key, ft_strlen(temp->key)) == 0)
+		{
+			free(temp->value);
+			temp->value = ft_strdup(sequence->commands->argv[0]);
+		}
+		temp = temp->next;
+	}
 }

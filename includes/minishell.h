@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 16:16:23 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:17:55 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void				wait_and_clear(t_main_dat *main_data);
 void				handle_exit(t_main_dat *main_data, int status);
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
+void				last_command(t_main_dat *main_data, t_seq *sequence);
 int					is_dir(t_main_dat *main_data);
 char				*build_str(char **str1, char **str2, char *str3);
 char				*find_path(char *cmd, char **paths, t_main_dat *main_data);
