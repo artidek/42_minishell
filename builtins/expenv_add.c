@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expenv_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svolkau <gvardovski@icloud.com>            +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 11:16:51 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/09 11:22:56 by svolkau          ###   ########.fr       */
+/*   Updated: 2025/06/13 13:51:03 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ int	getposeql(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (i);
+}
+
+void	change_path(char **value)
+{
+	char *joined;
+
+	joined = ft_strjoin(*value, ":");
+	free(*value);
+	*value = ft_strdup(joined);
+	free(joined);
+	joined = ft_strjoin(*value, getenv("PWD"));
+	free(*value);
+	*value = ft_strdup(joined);
+	free(joined);
 }

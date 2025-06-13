@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 11:10:40 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:17:28 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sighandler(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		write(1, "^\\Quit (core dumped)\n", 22);
+		write(1, "Quit (core dumped)\n", 19);
 		g_sig = 131;
 	}
 }
@@ -56,19 +56,27 @@ static void	run_command(t_main_dat *main_data)
 {
 	disable_echoctl();
 	execve(main_data->sequence->commands->path,
-		main_data->sequence->commands->argv, NULL);
+		main_data->sequence->commands->argv, main_data->envp_cp);
 }
 
 int	is_builtin(t_main_dat *main_data, t_seq *seq)
 {
 	int			i;
+	int			status;
 	t_commands	*commands;
 
 	commands = seq->commands;
 	i = built_in(commands->argv[0]);
 	if (i >= 0)
 	{
-		main_data->func_ptr[i](main_data, commands->argv);
+		status = main_data->func_ptr[i](main_data, commands->argv);
+		if (status > 0)
+		{
+			handle_exit(main_data, 2);
+			return (2);
+		}
+		else
+			handle_exit(main_data, 0);
 		if (!main_data->sequence->next)
 			clear_command_proc(main_data);
 		return (1);

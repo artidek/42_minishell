@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:50:10 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/07 12:04:34 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:16:23 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_main_dat
 	int				stdout_cp;
 	int				pipe;
 	int				(*func_ptr[7])(struct s_main_dat *, char **);
+	char			**envp_cp;
 	t_list			*vars;
 	t_shenv			*env_cp;
 	t_input_data	input_data;
@@ -73,6 +74,7 @@ void				wait_and_clear(t_main_dat *main_data);
 void				handle_exit(t_main_dat *main_data, int status);
 void				sigint_handler(int sig);
 void				sigquit_handler(int sig);
+int					is_dir(t_main_dat *main_data);
 char				*build_str(char **str1, char **str2, char *str3);
 char				*find_path(char *cmd, char **paths, t_main_dat *main_data);
 char				**get_pwd(void);

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:38:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 11:11:51 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/09 14:07:25 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static void	start_process(t_seq *seq, int *pipefd, int prev_pipe,
 				dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 			close(pipefd[0]);
-			is_builtin(main_data, seq);
-			exit(1);
+			if(is_builtin(main_data, seq) == 2)
+				exit(1);
+			exit(0);
 		}
 		exec_command(seq, prev_pipe, pipefd);
 	}

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 11:48:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/09 11:20:47 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:16:53 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,23 @@
 static t_list	*init_vars(void)
 {
 	char	*str;
+	char	*str1;
 	char	*num_to_str;
 	t_list	*first_entry;
+	t_list	*second_entry;
 
 	str = NULL;
+	str1 = NULL;
 	num_to_str = ft_itoa(0);
 	add_to_str(&str, ft_strlen("?="), "?=");
 	add_to_str(&str, ft_strlen(num_to_str), num_to_str);
 	free(num_to_str);
 	first_entry = ft_lstnew(ft_strdup(str));
+	add_to_str(&str1, ft_strlen("0=minishell"), "0=minishell");
+	second_entry = ft_lstnew(ft_strdup(str1));
+	first_entry->next = second_entry;
 	free(str);
+	free(str1);
 	return (first_entry);
 }
 
@@ -66,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 	main_data.env_cp = initshellenv(main_data.env_cp, envp);
 	main_data.vars = init_vars();
 	main_data.sequence = NULL;
+	main_data.envp_cp = envp;
 	init_builtins(&main_data);
 	(void)argv;
 	if (argc > 1)
