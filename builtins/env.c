@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:12:12 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/13 13:52:04 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:50:10 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ t_shenv	*initshellenv(t_shenv *en, char **env)
 		pos = getposeql(env[i]);
 		key = ft_substr(env[i], 0, pos);
 		value = ft_substr(env[i], pos + 1, ft_strlen(env[i]) - pos - 1);
-		if (ft_strncmp(key, "PATH", ft_strlen(key)) == 0)
-			change_path(&value);
 		addback(&en, new(key, value, 0));
 		i++;
 	}

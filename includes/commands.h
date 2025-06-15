@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:20:44 by svolkau           #+#    #+#             */
-/*   Updated: 2025/06/13 13:51:46 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:50:35 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ void				printexport(t_shenv *en);
 int					findkey(t_shenv *en, char *key);
 int					getposeql(char *str);
 void				freeenv(t_shenv *en);
-void				change_path(char **value);
 
 #endif
