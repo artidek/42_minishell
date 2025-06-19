@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 19:02:56 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/06 12:59:08 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:18:13 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	built_in(char *arg)
 	char	**b_names;
 
 	i = 0;
+	if (!arg || !arg[0])
+		return (-1);
 	b_names = ft_split("cd,echo,pwd,export,unset,env,exit", ',');
 	while (b_names[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:47:14 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/07 18:31:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:28:00 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	proceed_iterate(char **redir_str, char *str, int *i, int j)
 {
-	if ((str[j] == '>' && str[j + 1] == '>') || (str[j] == '<' && str[j + 1] == '<'))
+	if ((str[j] == '>' && str[j + 1] == '>') || (str[j] == '<' && str[j
+				+ 1] == '<'))
 	{
 		add_to_str(redir_str, 2, &str[j]);
 		j += 2;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 12:48:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 18:58:54 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:23:12 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	skip_quote(char *str, int *i, char quote)
 		if (str[j] == quote)
 		{
 			*i += 1;
-			return;
+			return ;
 		}
 		j++;
 		*i += 1;
@@ -35,7 +35,7 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 
 	j = 0;
 	if ((str[j] == '<' && str[j + 1] == ' ') || (str[j] == '>' && str[j
-			+ 1] == ' '))
+				+ 1] == ' '))
 	{
 		add_to_str(redir_str, 1, &str[j]);
 		j++;
@@ -43,7 +43,7 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 		skip_space(&str[j], &j, i);
 	}
 	if ((str[j + 1] == '<' && str[j + 2] == ' ') || (str[j + 1] == '>' && str[j
-			+ 2] == ' '))
+				+ 2] == ' '))
 	{
 		add_to_str(redir_str, 2, &str[j]);
 		j += 2;
@@ -52,7 +52,6 @@ static void	iterate_next(char **redir_str, char *str, int *i)
 	}
 	proceed_iterate(redir_str, str, i, j);
 }
-
 
 static void	update_redir_str(char **redir_str, int *i, int num_symb, char *str)
 {

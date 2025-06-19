@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 16:31:06 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 18:08:12 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 11:28:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	inner_str(char *str, char **arg, int *i)
 		{
 			add_to_str(arg, 1, &str[j]);
 			*i += 1;
-			return;
+			return ;
 		}
 		if (str[j])
 			add_to_str(arg, 1, &str[j]);
@@ -52,9 +52,9 @@ static void	join_farg(char **arg, char *str, int *i)
 
 char	**first_split(char *input)
 {
-	int	i;
+	int		i;
 	char	*arg;
-	char **res;
+	char	**res;
 	t_args	*args;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:46:50 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 16:02:34 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:27:47 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	init_commands(t_main_dat *main_data)
 	char	**paths;
 
 	paths = get_paths(main_data->env_cp);
-	if (!main_data->sequence->temp_cmd)
+	if (!main_data->sequence->temp_cmd && !main_data->sequence->next)
 		return (1);
 	if (!fill_commands(main_data, paths))
 	{

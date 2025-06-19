@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 11:41:35 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 21:26:20 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:38:41 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	wait_and_clear(t_main_dat *main_data)
 	seq = main_data->sequence;
 	while (seq)
 	{
-		waitpid(seq->pid, &status, 0);
-		last_command(main_data, seq);
+		if (seq->pid >= 0)
+		{
+			waitpid(seq->pid, &status, 0);
+			last_command(main_data, seq);
+		}
 		seq = seq->next;
 	}
 	WEXITSTATUS(status);

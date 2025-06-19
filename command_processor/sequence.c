@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sequence.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 12:04:04 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/08 19:05:52 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:36:42 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	iterate_cmd(char *str, int *i, int *j)
 		{
 			*j += a;
 			*i += a;
-			return;
+			return ;
 		}
 	}
 }
@@ -47,11 +47,11 @@ static void	update_cmd_str(char **cmd_str, char *str, int *i)
 	{
 		if (str[j] == '>' || str[j] == '<')
 		{
-			iterate_cmd(&str[j], i , &j);
-			return;
+			iterate_cmd(&str[j], i, &j);
+			return ;
 		}
 		if (str[j] == '\'' || str[j] == '\"')
-			return;
+			return ;
 		if (str[j])
 		{
 			add_to_str(cmd_str, 1, &str[j]);
@@ -116,6 +116,7 @@ void	init_sequence(t_main_dat *main_data, char **in_arr)
 	while (temp)
 	{
 		split_input(&temp, in_arr[i]);
+		temp->pid = -1;
 		temp = temp->next;
 		i++;
 	}

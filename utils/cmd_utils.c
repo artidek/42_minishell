@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:50:33 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/07 12:06:14 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 13:40:30 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	fill_commands(t_main_dat *main_data, char **paths)
 		main_data->pipe = 1;
 	while (temp)
 	{
-		if (!init_args(main_data, &temp))
+		if (temp->temp_cmd && !init_args(main_data, &temp))
 			return (0);
 		if (temp->commands->argv && !init_path(&temp, paths, main_data))
 			return (0);

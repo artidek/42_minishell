@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tty_ctl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aobshatk <aobshatk@mail.com>               +#+  +:+       +#+        */
+/*   By: aobshatk <aobshatk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 10:58:26 by aobshatk          #+#    #+#             */
-/*   Updated: 2025/06/13 21:23:10 by aobshatk         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:36:37 by aobshatk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ int	cmd_not_found(char *arg, t_main_dat *main_data)
 
 int	is_dir(t_main_dat *main_data)
 {
-	t_seq *temp;
-	DIR	*op_dir;
+	t_seq	*temp;
+	DIR		*op_dir;
 
 	temp = main_data->sequence;
 	while (temp)
 	{
-		if (built_in(temp->commands->argv[0]) >= 0)
+		if (temp->commands->argv && built_in(temp->commands->argv[0]) >= 0)
+			return (0);
+		if (!temp->commands->argv)
 			return (0);
 		op_dir = opendir(temp->commands->path);
 		if (op_dir)
@@ -68,7 +70,6 @@ int	is_dir(t_main_dat *main_data)
 		}
 		temp = temp->next;
 	}
-
 	return (0);
 }
 
@@ -77,7 +78,7 @@ void	last_command(t_main_dat *main_data, t_seq *sequence)
 	t_shenv	*temp;
 
 	temp = main_data->env_cp;
-	while(temp)
+	while (temp)
 	{
 		if (ft_strncmp("_", temp->key, ft_strlen(temp->key)) == 0)
 		{
